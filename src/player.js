@@ -33,7 +33,7 @@ export default class Player {
     if (this.fade < 1) this.fade += 0.05;
     this.ctx.globalAlpha = this.fade;
 
-    this.rot = this.lerp(this.rot, (Math.PI / 180) * this.velx * 100, 0.1);
+    this.rot = this.lerp(this.rot, (Math.PI / 180) * this.velx * 140, 0.07);
 
     this.ctx.save();
     this.ctx.translate(this.x, this.y);

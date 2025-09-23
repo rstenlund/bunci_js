@@ -72,7 +72,7 @@ export default async function runGame(clerk_instance) {
     }
   });
 
-  document.addEventListener("mousedown", (e) => {
+  canvas.addEventListener("mousedown", (e) => {
     if (!running) {
       transition = true;
     }
