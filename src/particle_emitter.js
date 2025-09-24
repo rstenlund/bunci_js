@@ -1,7 +1,7 @@
 import Particle from "./oparticle";
 
 export default class ParticleEmitter {
-  constructor(x, y, ctx, emitRate = 50) {
+  constructor(x, y, ctx, emitRate = 50, size = 5, color = "orange", alpha = 1) {
     this.x = x;
     this.y = y;
     this.ctx = ctx;
@@ -20,13 +20,29 @@ export default class ParticleEmitter {
     this.i = 0;
   }
 
+  moveTo(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
   enable() {
     this.enabled = true;
   }
 
+  disable() {
+    this.enabled = false;
+  }
+
+  burst(time) {
+    this.enable();
+    setTimeout(() => {
+      this.disable();
+    }, time);
+  }
+
   emit() {
     if (!this.enabled) return;
-    i++;
+    this.i++;
     if (this.i >= this.emitRate) {
       this.i = 0;
       this.particles.push(
@@ -40,9 +56,12 @@ export default class ParticleEmitter {
         )
       );
     }
+  }
 
+  updateParticles() {
     this.particles.forEach((p, index) => {
       p.update();
+      p.draw();
       if (p.dead()) {
         this.particles.splice(index, 1);
       }

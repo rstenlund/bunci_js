@@ -15,10 +15,11 @@ export default class Particle {
     this.x += this.velX;
     this.y += this.velY;
     this.alpha -= this.fadeRate;
+    if (this.alpha < 0) this.alpha = 0;
   }
 
   dead() {
-    return this.alpha <= 0;
+    return this.alpha < 0;
   }
 
   draw() {
