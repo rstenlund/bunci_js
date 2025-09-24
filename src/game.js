@@ -3,6 +3,8 @@ import playerImage from "./assets/player.png";
 import trophyImage from "./assets/trophy.png";
 import skott_r_Image from "./assets/skott_r.png";
 import skott_l_Image from "./assets/skott_l.png";
+import kryssImage from "./assets/kryss.png";
+import leaderboard_frameImage from "./assets/leaderboard_frame.png";
 
 import Player from "./player";
 import Bullet from "./bullet";
@@ -32,6 +34,7 @@ export default async function runGame(clerk_instance) {
     console.error("Error fetching leaderboard data:", error);
     return;
   }
+  let leaderboard_data = data;
   let max_score = 0;
 
   console.log(clerk_instance.user.username);
@@ -58,6 +61,7 @@ export default async function runGame(clerk_instance) {
   let running = false;
   let transition = false;
   let dead = false;
+  let leaderboard_menu = false;
 
   const img = await loadImage(bunciImage);
 
@@ -65,6 +69,10 @@ export default async function runGame(clerk_instance) {
 
   const skott_r_sprite = await loadImage(skott_r_Image);
   const skott_l_sprite = await loadImage(skott_l_Image);
+
+  const kryss_sprite = await loadImage(kryssImage);
+
+  const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
   const trophy_sprite = await loadImage(trophyImage);
   const trophySize = 60;
@@ -99,6 +107,7 @@ export default async function runGame(clerk_instance) {
         for (let bullet of bullets) {
           bullet.reset();
         }
+        player.reset();
       }
     }
     a += 0.05;
@@ -131,7 +140,7 @@ export default async function runGame(clerk_instance) {
   }
 
   function deathScreen() {
-    console.log("Player is dead");
+    // console.log("Player is dead");
 
     player.reset();
 
@@ -143,6 +152,15 @@ export default async function runGame(clerk_instance) {
         transition = false;
         dead = false;
         score = 0;
+        bullets = [
+          new Bullet(
+            ctx,
+            canvas.width,
+            canvas.height,
+            skott_r_sprite,
+            skott_l_sprite
+          ),
+        ];
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -178,11 +196,62 @@ export default async function runGame(clerk_instance) {
     );
   }
 
+  function leaderboardScreen() {
+    // sort the leaderboard data by score
+    leaderboard_data.sort((a, b) => b.score - a.score);
+    let leaderboard_frame_width = 400;
+    let leaderboard_frame_height =
+      (leaderboard_frame_width / leaderboard_frame_sprite.width) *
+      leaderboard_frame_sprite.height;
+    ctx.drawImage(
+      leaderboard_frame_sprite,
+      canvas.width / 2 - leaderboard_frame_width / 2,
+      30,
+      leaderboard_frame_width,
+      leaderboard_frame_height
+    );
+    //console.log(leaderboard_data);
+    ctx.font = "bold 24px Courier, monospace";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(
+      "Leaderboard",
+      canvas.width / 2,
+      30 + leaderboard_frame_height / 2
+    );
+    ctx.font = "20px Courier, monospace";
+    for (let i = 0; i < Math.min(10, leaderboard_data.length); i++) {
+      let entry = leaderboard_data[i];
+      ctx.drawImage(
+        leaderboard_frame_sprite,
+        canvas.width / 2 - leaderboard_frame_width / 2,
+        120 + i * 55 - leaderboard_frame_height / 2,
+        leaderboard_frame_width,
+        leaderboard_frame_height
+      );
+      //c
+      ctx.fillText(
+        `${i + 1}. ${entry.user}: ${entry.score}`,
+        canvas.width / 2,
+        120 + i * 55
+      );
+    }
+
+    ctx.drawImage(
+      kryss_sprite,
+      canvas.width - trophySize - 20,
+      20 - y_off,
+      trophySize,
+      trophySize
+    );
+  }
+
   document.addEventListener("keypress", (e) => {
     if (e.code === "Space" && !running) {
       transition = true;
 
-      console.log("go");
+      //console.log("go");
     }
     if (e.key === "a" && running) {
       player.left();
@@ -192,13 +261,14 @@ export default async function runGame(clerk_instance) {
     }
   });
 
-  canvas.addEventListener("mousedown", (e) => {
+  canvas.addEventListener("mousedown", async (e) => {
     const rect = canvas.getBoundingClientRect();
     const canvasX = e.clientX - rect.left;
     const canvasY = e.clientY - rect.top;
     console.log("Canvas coordinates:", canvasX, canvasY);
 
     if (!running && !transition) {
+      //console.log("go");
       if (
         canvasX > canvas.width - trophySize - 20 &&
         canvasX < canvas.width - 20 &&
@@ -206,9 +276,22 @@ export default async function runGame(clerk_instance) {
         canvasY < 20 + trophySize
       ) {
         // clicked on trophy
-        console.log("trophy clicked");
+        console.log("button clicked");
+        leaderboard_menu = !leaderboard_menu;
+        if (leaderboard_menu) {
+          const { data, error } = await supabase.from("leaderboard").select("");
+          if (error) {
+            console.error("Error fetching leaderboard data:", error);
+            return;
+          }
+          leaderboard_data = data;
+        }
+
         return;
       }
+    }
+    if (leaderboard_menu) {
+      return;
     }
     if (!running) {
       transition = true;
@@ -245,6 +328,12 @@ export default async function runGame(clerk_instance) {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    if (leaderboard_menu) {
+      leaderboardScreen();
+      requestAnimationFrame(gameLoop);
+      return;
+    }
+
     if (dead) {
       deathScreen();
       requestAnimationFrame(gameLoop);
@@ -258,8 +347,19 @@ export default async function runGame(clerk_instance) {
 
     if (Date.now() - l >= 1000) {
       score++;
-      console.log(score);
+      //console.log(score);
       l = Date.now();
+      if (score % 8 == 0) {
+        bullets.push(
+          new Bullet(
+            ctx,
+            canvas.width,
+            canvas.height,
+            skott_r_sprite,
+            skott_l_sprite
+          )
+        );
+      }
     }
 
     //display score
@@ -270,43 +370,43 @@ export default async function runGame(clerk_instance) {
     ctx.fillText("Score: " + score, canvas.width / 2, 20);
     ctx.fillText("Best: " + max_score, canvas.width / 2, 50);
 
-    if (player.outOfBounds()) {
-      dead = true;
-      imageSizeFactor = 1;
-      a = 0;
-      y_off = 0;
-      y_off_speed = 0;
-      transition = false;
-      running = false;
-      if (score > max_score) {
-        max_score = score;
-        const { data, error } = await supabase
-          .from("leaderboard")
-          .update({ score: max_score })
-          .eq("user", clerk_instance.user.username)
-          .select();
-
-        if (error) {
-          console.error("Error updating leaderboard:", error);
-        } else {
-          console.log(data);
-        }
-      }
-      score = 0;
-      deathScreen();
-      requestAnimationFrame(gameLoop);
-      return;
-    }
-
     if (del > 300) {
       for (let bullet of bullets) {
         bullet.draw();
         bullet.update(player.deltaTime);
+        if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
+          //console.log("Player hit by bullet");
+          dead = true;
+          imageSizeFactor = 1;
+          a = 0;
+          y_off = 0;
+          y_off_speed = 0;
+          transition = false;
+          running = false;
+          if (score > max_score) {
+            max_score = score;
+            const { data, error } = await supabase
+              .from("leaderboard")
+              .update({ score: max_score })
+              .eq("user", clerk_instance.user.username)
+              .select();
+
+            if (error) {
+              console.error("Error updating leaderboard:", error);
+            } else {
+              //console.log(data);
+            }
+          }
+          score = 0;
+          deathScreen();
+          requestAnimationFrame(gameLoop);
+          return;
+        }
       }
     }
 
-    player.draw();
     player.update();
+    player.draw();
 
     requestAnimationFrame(gameLoop);
   }

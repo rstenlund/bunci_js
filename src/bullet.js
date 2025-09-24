@@ -8,7 +8,7 @@ export default class Bullet {
     this.x = 0;
     this.y = 0;
     this.dir = 1;
-    this.speed = 0.5;
+    this.speed = 500;
 
     this.img_r = img_r;
     this.img_l = img_l;
@@ -28,7 +28,7 @@ export default class Bullet {
 
   draw() {
     this.ctx.fillStyle = "red";
-    //this.ctx.fillRect(this.x + 5, this.y + 15, this.width - 12, this.height);
+
     this.img = this.dir === 1 ? this.img_r : this.img_l;
     this.ctx.drawImage(
       this.img,
