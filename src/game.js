@@ -5,9 +5,14 @@ import skott_r_Image from "./assets/skott_r.png";
 import skott_l_Image from "./assets/skott_l.png";
 import kryssImage from "./assets/kryss.png";
 import leaderboard_frameImage from "./assets/leaderboard_frame.png";
+import coinImage from "./assets/coin.png";
+import bombImage from "./assets/bomb.png";
 
 import Player from "./player";
 import Bullet from "./bullet";
+import Pickup from "./pickup";
+
+import ParticleEmitter from "./particle_emitter";
 
 import { createClient } from "@supabase/supabase-js";
 
@@ -71,6 +76,10 @@ export default async function runGame(clerk_instance) {
   const skott_l_sprite = await loadImage(skott_l_Image);
 
   const kryss_sprite = await loadImage(kryssImage);
+  const coin_sprite = await loadImage(coinImage);
+  const bomb_sprite = await loadImage(bombImage);
+
+  const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
@@ -86,6 +95,9 @@ export default async function runGame(clerk_instance) {
       skott_l_sprite
     ),
   ];
+
+  let coin = new Pickup(ctx, canvas.width, canvas.height, coin_sprite, 200);
+  let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
 
   let imageSizeFactor = 1;
   let a = 0;
@@ -161,6 +173,9 @@ export default async function runGame(clerk_instance) {
             skott_l_sprite
           ),
         ];
+
+        coin.reset();
+        bomb.reset();
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -360,6 +375,13 @@ export default async function runGame(clerk_instance) {
           )
         );
       }
+      if (score % 12 == 0 && !coin.alive) {
+        coin.alive = true;
+      }
+
+      if (score % 45 == 0 && !bomb.alive) {
+        bomb.alive = true;
+      }
     }
 
     //display score
@@ -369,6 +391,34 @@ export default async function runGame(clerk_instance) {
     ctx.textBaseline = "top";
     ctx.fillText("Score: " + score, canvas.width / 2, 20);
     ctx.fillText("Best: " + max_score, canvas.width / 2, 50);
+
+    if (coin.alive) {
+      coin.draw();
+      coin.update(player.deltaTime);
+    }
+
+    if (bomb.alive) {
+      bomb.draw();
+      bomb.update(player.deltaTime);
+    }
+
+    if (coin.alive && player.collidesWithPickup(coin)) {
+      //console.log("Player collected coin");
+      coin.reset();
+      score += 5;
+    }
+
+    if (bomb.alive && player.collidesWithPickup(bomb)) {
+      //console.log("Player hit bomb");
+      explosion.moveTo(bomb.x + bomb.size / 2, bomb.y + bomb.size / 2);
+      explosion.burst(300);
+      bomb.reset();
+
+      bullets = [];
+    }
+
+    explosion.emit();
+    explosion.updateParticles();
 
     if (del > 300) {
       for (let bullet of bullets) {

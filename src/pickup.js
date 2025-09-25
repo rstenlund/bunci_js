@@ -1,18 +1,17 @@
-export default class Bullet {
-  constructor(ctx, canvas_width, canvas_height, img_r, img_l) {
+export default class Pickup {
+  constructor(ctx, canvas_width, canvas_height, img, speed = 300) {
     this.ctx = ctx;
     this.size = 40;
-    this.width = 30;
-    this.height = 13;
+    this.width = this.size;
+    this.height = this.size;
     this.canvas_height = canvas_height;
     this.canvas_width = canvas_width;
     this.x = 0;
     this.y = 0;
     this.dir = 1;
-    this.speed = 300;
+    this.speed = speed;
 
-    this.img_r = img_r;
-    this.img_l = img_l;
+    this.img = img;
 
     this.alive = false;
     this.reset();
@@ -21,8 +20,6 @@ export default class Bullet {
   reset() {
     this.alive = false;
     this.dir = Math.random() < 0.5 ? 1 : -1;
-
-    this.img = this.dir === 1 ? this.img_r : this.img_l;
     if (this.dir === 1) {
       this.x = -1 * (Math.random() * 300 + 50);
     } else {
@@ -35,13 +32,6 @@ export default class Bullet {
     this.ctx.fillStyle = "red";
 
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
-
-    // // Draw hitbox for debugging
-    // this.ctx.save();
-    // this.ctx.strokeStyle = "yellow";
-    // this.ctx.lineWidth = 2;
-    // this.ctx.strokeRect(this.x + 5, this.y + 14, this.width, this.height);
-    // this.ctx.restore();
   }
   update(deltaTime) {
     this.x += this.speed * this.dir * deltaTime;

@@ -1,12 +1,14 @@
 export default class Particle {
-  constructor(x, y, size, color, alpha, ctx) {
+  constructor(x, y, size, color, alpha, ctx, downward = true) {
     this.x = x;
     this.y = y;
     this.size = size + Math.random() * 2;
     this.color = color;
     this.ctx = ctx;
+    this.downward = downward;
     this.velX = (Math.random() - 0.5) * 2;
-    this.velY = Math.random() * 2;
+    this.velY = this.downward ? Math.random() * 2 : (Math.random() - 0.5) * 2;
+
     this.alpha = alpha;
     this.fadeRate = 0.01;
   }

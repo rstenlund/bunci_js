@@ -1,7 +1,16 @@
 import Particle from "./oparticle";
 
 export default class ParticleEmitter {
-  constructor(x, y, ctx, emitRate = 50, size = 5, color = "orange", alpha = 1) {
+  constructor(
+    x,
+    y,
+    ctx,
+    emitRate = 50,
+    size = 5,
+    color = "orange",
+    alpha = 1,
+    downward = true
+  ) {
     this.x = x;
     this.y = y;
     this.ctx = ctx;
@@ -18,6 +27,8 @@ export default class ParticleEmitter {
 
     this.enabled = false;
     this.i = 0;
+
+    this.downward = downward;
   }
 
   moveTo(x, y) {
@@ -52,7 +63,8 @@ export default class ParticleEmitter {
           this.size,
           this.color,
           this.alpha,
-          this.ctx
+          this.ctx,
+          this.downward
         )
       );
     }

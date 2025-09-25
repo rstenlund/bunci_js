@@ -128,4 +128,14 @@ export default class Player {
       this.y - this.size * 0.3 < bullet.y + bullet.height - 15
     );
   }
+
+  collidesWithPickup(coin) {
+    // this is the coins hitbox: this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
+    return (
+      this.x + this.size * 0.3 > coin.x &&
+      this.x - this.size * 0.3 < coin.x + coin.size &&
+      this.y + this.size * 0.3 > coin.y &&
+      this.y - this.size * 0.3 < coin.y + coin.size
+    );
+  }
 }
