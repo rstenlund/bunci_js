@@ -416,7 +416,7 @@ export default async function runGame(clerk_instance) {
       explosion.burst(300);
       bomb.reset();
 
-      bullets = [];
+      bullets = bullets.filter(() => Math.random() < 0.5);
     }
 
     explosion.emit();
