@@ -238,19 +238,21 @@ export default async function runGame(clerk_instance) {
     ctx.font = "20px Courier, monospace";
     for (let i = 0; i < Math.min(10, leaderboard_data.length); i++) {
       let entry = leaderboard_data[i];
-      ctx.drawImage(
-        leaderboard_frame_sprite,
-        canvas.width / 2 - leaderboard_frame_width / 2,
-        120 + i * 55 - leaderboard_frame_height / 2,
-        leaderboard_frame_width,
-        leaderboard_frame_height
-      );
-      //c
-      ctx.fillText(
-        `${i + 1}. ${entry.user}: ${entry.score}`,
-        canvas.width / 2,
-        120 + i * 55
-      );
+      if (entry.score > 0) {
+        ctx.drawImage(
+          leaderboard_frame_sprite,
+          canvas.width / 2 - leaderboard_frame_width / 2,
+          120 + i * 55 - leaderboard_frame_height / 2,
+          leaderboard_frame_width,
+          leaderboard_frame_height
+        );
+        //c
+        ctx.fillText(
+          `${i + 1}. ${entry.user}: ${entry.score}`,
+          canvas.width / 2,
+          120 + i * 55
+        );
+      }
     }
 
     ctx.drawImage(
