@@ -19,7 +19,7 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   document.getElementById("app").innerHTML = `
-  <image src="./src/assets/bunci.png" style="width: 20vw; margin-bottom: 20px;" />
+  <image src="./bunci.png" style="width: 20vw; margin-bottom: 20px;" />
     <div id="sign-in"></div>
 
   `;
