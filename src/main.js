@@ -19,7 +19,7 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   document.getElementById("app").innerHTML = `
-  <h1 style="width: 20vw; margin-bottom: 20px; text-align: center; font-family: 'Courier New', monospace;">bunci</h1>
+  <h1 style="width: 20vw; margin-bottom: 20px; text-align: center; font-family: 'Courier New', monospace; font-size: 40px;">bunci</h1>
     <div id="sign-in"></div>
 
   `;
