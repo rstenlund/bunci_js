@@ -249,7 +249,7 @@ export default async function runGame(clerk_instance) {
         //c
         ctx.fillStyle = "white";
         if (entry.user == "ruben") {
-          ctx.fillStyle = "red";
+          ctx.fillStyle = "#FFD700";
         }
 
         ctx.fillText(
