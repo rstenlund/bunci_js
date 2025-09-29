@@ -41,8 +41,8 @@ export default async function runGame(clerk_instance) {
 
   function resizeCanvas() {
     if (isMobile()) {
-      // On phone: 70% of viewport width
-      canvas.style.width = "70vw";
+      // On phone: 85% of viewport width
+      canvas.style.width = "85vw";
       canvas.style.height = "auto";
     } else {
       // On PC: 70% of viewport height
