@@ -7,7 +7,7 @@ export default class Player {
     this.ctx = ctx;
 
     //position and size
-    this.x = canvas.width / 2;
+    this.x = canvas.width / 2 || 100;
     this.y = canvas.height / 2;
     this.size = 80;
 

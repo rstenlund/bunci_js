@@ -157,8 +157,6 @@ export default async function runGame(clerk_instance) {
   function deathScreen() {
     // console.log("Player is dead");
 
-    player.reset();
-
     if (transition) {
       y_off_speed += transitionSpeed;
       y_off += y_off_speed * dT;
@@ -179,6 +177,7 @@ export default async function runGame(clerk_instance) {
 
         coin.reset();
         bomb.reset();
+        player.reset();
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -426,7 +425,6 @@ export default async function runGame(clerk_instance) {
 
       bullets = bullets.filter(() => Math.random() < 0.5);
     }
-    1;
 
     explosion.emit();
     explosion.updateParticles();
