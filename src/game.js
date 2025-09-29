@@ -330,6 +330,7 @@ export default async function runGame(clerk_instance) {
   let score = 0;
 
   let lastTime = Date.now();
+  let l = Date.now();
   async function gameLoop() {
     dT = (Date.now() - lastTime) / 1000;
     lastTime = Date.now();
