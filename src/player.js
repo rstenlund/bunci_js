@@ -67,6 +67,7 @@ export default class Player {
     }
   }
   update(dT) {
+    console.log(this.x, this.y);
     if (this.fade < 1) return; // don't update until fully faded in
 
     console.log(dT);
