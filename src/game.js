@@ -106,7 +106,7 @@ export default async function runGame(clerk_instance) {
 
   const player = new Player(canvas, ctx, player_sprite);
 
-  const zoomSpeed = 20;
+  const zoomSpeed = 6;
   const transitionSpeed = 15;
 
   function splashScreen() {
@@ -326,7 +326,6 @@ export default async function runGame(clerk_instance) {
 
   let del = 0;
 
-  let l = Date.now();
   let dT = 0.005;
   let score = 0;
 

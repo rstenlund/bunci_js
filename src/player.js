@@ -107,7 +107,7 @@ export default class Player {
     this.vely = 0;
     this.velx = 0;
     this.rot = 0;
-    this.fade = 0;
+    this.fade = 1;
     this.timenow = Date.now();
     this.lastFrame = Date.now() - 0.1;
     this.deltaTime = (this.timenow - this.lastFrame) / 1000;
