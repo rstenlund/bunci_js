@@ -10,7 +10,7 @@ export default class Particle {
     this.velY = this.downward ? Math.random() * 2 : (Math.random() - 0.5) * 2;
 
     this.alpha = alpha;
-    this.fadeRate = 0.01;
+    this.fadeRate = 0.011;
   }
 
   update() {
