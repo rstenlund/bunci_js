@@ -122,7 +122,7 @@ export default async function runGame(clerk_instance) {
         player.reset();
       }
     }
-    a += 0.05;
+    a += 50 * dT;
     imageSizeFactor = 1 + 0.02 * Math.sin(a);
 
     const imgWidth = (imageSizeFactor * img.width) / 2;
@@ -182,7 +182,7 @@ export default async function runGame(clerk_instance) {
         }
       }
     }
-    a += 0.05;
+    a += 50 * dT;
     imageSizeFactor = 1 + 0.02 * Math.sin(a);
 
     const imgWidth = (imageSizeFactor * img.width) / 2;
@@ -324,9 +324,14 @@ export default async function runGame(clerk_instance) {
   let del = 0;
 
   let l = Date.now();
+  let dT = 0.005;
   let score = 0;
 
+  let lastTime = Date.now();
   async function gameLoop() {
+    dT = (Date.now() - lastTime) / 1000;
+    lastTime = Date.now();
+
     if (del < 1000) {
       del++;
     }
@@ -396,12 +401,12 @@ export default async function runGame(clerk_instance) {
 
     if (coin.alive) {
       coin.draw();
-      coin.update(player.deltaTime);
+      coin.update(dT);
     }
 
     if (bomb.alive) {
       bomb.draw();
-      bomb.update(player.deltaTime);
+      bomb.update(dT);
     }
 
     if (coin.alive && player.collidesWithPickup(coin)) {
@@ -426,7 +431,7 @@ export default async function runGame(clerk_instance) {
     if (del > 300) {
       for (let bullet of bullets) {
         bullet.draw();
-        bullet.update(player.deltaTime);
+        bullet.update(dT);
         if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
           //console.log("Player hit by bullet");
           dead = true;
@@ -461,7 +466,7 @@ export default async function runGame(clerk_instance) {
       }
     }
 
-    player.update();
+    player.update(dT);
     player.draw();
 
     requestAnimationFrame(gameLoop);

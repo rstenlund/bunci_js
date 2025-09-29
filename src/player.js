@@ -20,9 +20,6 @@ export default class Player {
     this.jumpStrength = -600;
     this.dashStrength = 350;
 
-    this.timenow = Date.now();
-    this.lastFrame = Date.now() - 6;
-    this.deltaTime = (this.timenow - this.lastFrame) / 1000;
     this.rot = 0;
 
     this.emitter = new ParticleEmitter(20, 20, this.ctx, 1, 3);
@@ -69,18 +66,15 @@ export default class Player {
       );
     }
   }
-  update() {
+  update(dT) {
     if (this.fade < 1) return; // don't update until fully faded in
-    this.timenow = Date.now();
-    this.deltaTime = (this.timenow - this.lastFrame) / 1000; // deltaTime in seconds
-    console.log(this.deltaTime);
 
-    this.vely += this.g * this.deltaTime;
-    this.y += this.vely * this.deltaTime;
-    this.x += this.velx * this.deltaTime;
-    this.velx *= Math.pow(0.998, this.deltaTime * 60); // frame-rate independent friction
+    console.log(dT);
 
-    this.lastFrame = this.timenow;
+    this.vely += this.g * dT;
+    this.y += this.vely * dT;
+    this.x += this.velx * dT;
+    this.velx *= Math.pow(0.998 * dT * 60); // frame-rate independent friction
 
     let x = Math.cos(this.rot - Math.PI / 2) * (this.size / 2);
     let y = Math.sin(this.rot - Math.PI / 2) * (this.size / 2);
