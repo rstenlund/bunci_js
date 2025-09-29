@@ -56,4 +56,5 @@ body {
 
 canvas {
   border-radius: 15px;
+  user-select: none;
 }
