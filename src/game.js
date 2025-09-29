@@ -418,6 +418,7 @@ export default async function runGame(clerk_instance) {
 
       bullets = bullets.filter(() => Math.random() < 0.5);
     }
+    1;
 
     explosion.emit();
     explosion.updateParticles();
@@ -448,6 +449,9 @@ export default async function runGame(clerk_instance) {
             } else {
               //console.log(data);
             }
+            clerk_instance.user.updateProfile({
+              publicMetadata: { highscore: max_score },
+            });
           }
           score = 0;
           deathScreen();
