@@ -29,9 +29,32 @@ function loadImage(src) {
   });
 }
 
+function isMobile() {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    navigator.userAgent
+  );
+}
+
+function resizeCanvas() {
+  if (isMobile()) {
+    // On phone: 70% of viewport width
+    canvas.style.width = "70vw";
+    canvas.style.height = "auto";
+  } else {
+    // On PC: 70% of viewport height
+    canvas.style.height = "70vh";
+    canvas.style.width = "auto";
+  }
+}
+
 export default async function runGame(clerk_instance) {
   console.log("Game started");
   const canvas = document.getElementById("gameCanvas");
+  canvas.width = 1000;
+  canvas.height = 700;
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
   const ctx = canvas.getContext("2d");
 
   const { data, error } = await supabase.from("leaderboard").select("");

@@ -36,6 +36,10 @@ body {
   margin: 30px;
 }
 
+.navbar a:focus {
+  outline: none;
+}
+
 #app {
   width: 100%;
   display: flex;
