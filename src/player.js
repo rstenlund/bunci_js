@@ -7,7 +7,7 @@ export default class Player {
     this.ctx = ctx;
 
     //position and size
-    this.x = canvas.width / 2 || 100;
+    this.x = canvas.width / 2;
     this.y = canvas.height / 2;
     this.size = 80;
 
@@ -71,6 +71,7 @@ export default class Player {
     if (this.fade < 1) return; // don't update until fully faded in
 
     console.log(dT);
+    console.log(this.canvas.width);
 
     this.vely += this.g * dT;
     this.y += this.vely * dT;
