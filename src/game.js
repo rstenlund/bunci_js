@@ -106,13 +106,16 @@ export default async function runGame(clerk_instance) {
 
   const player = new Player(canvas, ctx, player_sprite);
 
+  const zoomSpeed = 20;
+  const transitionSpeed = 15;
+
   function splashScreen() {
     if (dead) {
       return;
     }
     if (transition) {
-      y_off_speed += 0.1;
-      y_off += y_off_speed;
+      y_off_speed += transitionSpeed;
+      y_off += y_off_speed * dT;
       if (y_off > canvas.height) {
         running = true;
         transition = false;
@@ -122,7 +125,7 @@ export default async function runGame(clerk_instance) {
         player.reset();
       }
     }
-    a += 50 * dT;
+    a += zoomSpeed * dT;
     imageSizeFactor = 1 + 0.02 * Math.sin(a);
 
     const imgWidth = (imageSizeFactor * img.width) / 2;
@@ -157,8 +160,8 @@ export default async function runGame(clerk_instance) {
     player.reset();
 
     if (transition) {
-      y_off_speed += 0.1;
-      y_off += y_off_speed;
+      y_off_speed += transitionSpeed;
+      y_off += y_off_speed * dT;
       if (y_off > canvas.height) {
         running = true;
         transition = false;
@@ -182,7 +185,7 @@ export default async function runGame(clerk_instance) {
         }
       }
     }
-    a += 50 * dT;
+    a += zoomSpeed * dT;
     imageSizeFactor = 1 + 0.02 * Math.sin(a);
 
     const imgWidth = (imageSizeFactor * img.width) / 2;
