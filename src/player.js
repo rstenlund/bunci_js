@@ -76,7 +76,7 @@ export default class Player {
     this.vely += this.g * dT;
     this.y += this.vely * dT;
     this.x += this.velx * dT;
-    this.velx *= Math.pow(0.998 * dT * 60); // frame-rate independent friction
+    this.velx *= Math.pow(0.998, dT * 60); // frame-rate independent friction
 
     let x = Math.cos(this.rot - Math.PI / 2) * (this.size / 2);
     let y = Math.sin(this.rot - Math.PI / 2) * (this.size / 2);
