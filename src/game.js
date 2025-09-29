@@ -247,6 +247,11 @@ export default async function runGame(clerk_instance) {
           leaderboard_frame_height
         );
         //c
+        ctx.fillStyle = "white";
+        if (entry.user == "ruben") {
+          ctx.fillStyle = "#FFD700";
+        }
+
         ctx.fillText(
           `${i + 1}. ${entry.user}: ${entry.score}`,
           canvas.width / 2,
