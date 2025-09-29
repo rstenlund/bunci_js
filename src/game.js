@@ -311,8 +311,10 @@ export default async function runGame(clerk_instance) {
 
   canvas.addEventListener("mousedown", async (e) => {
     const rect = canvas.getBoundingClientRect();
-    const canvasX = e.clientX - rect.left;
-    const canvasY = e.clientY - rect.top;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const canvasX = (e.clientX - rect.left) * scaleX;
+    const canvasY = (e.clientY - rect.top) * scaleY;
     console.log("Canvas coordinates:", canvasX, canvasY);
 
     if (!running && !transition) {
