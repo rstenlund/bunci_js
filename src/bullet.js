@@ -17,6 +17,7 @@ export default class Bullet {
     this.img_l = img_l;
 
     this.sound = new Audio(bulletSoundFile);
+    this.sound.volume = 0.2;
 
     this.alive = false;
     this.reset();
