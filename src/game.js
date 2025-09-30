@@ -105,6 +105,8 @@ export default async function runGame(clerk_instance) {
 
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
+  const coinSound = new Audio("./assets/pickupCoin.wav");
+
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
   const trophy_sprite = await loadImage(trophyImage);
@@ -446,6 +448,8 @@ export default async function runGame(clerk_instance) {
       //console.log("Player collected coin");
       coin.reset();
       score += 5;
+      coinSound.currentTime = 0;
+      coinSound.play();
     }
 
     if (bomb.alive && player.collidesWithPickup(bomb)) {
