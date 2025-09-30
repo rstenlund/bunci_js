@@ -422,8 +422,6 @@ export default async function runGame(clerk_instance) {
             skott_l_sprite
           )
         );
-        bulletSound.currentTime = 0;
-        bulletSound.play();
       }
       if (score % 12 == 0 && !coin.alive) {
         coin.alive = true;

@@ -1,3 +1,5 @@
+import bulletSoundFile from "./assets/laserShoot.wav";
+
 export default class Bullet {
   constructor(ctx, canvas_width, canvas_height, img_r, img_l) {
     this.ctx = ctx;
@@ -14,11 +16,15 @@ export default class Bullet {
     this.img_r = img_r;
     this.img_l = img_l;
 
+    this.sound = new Audio(bulletSoundFile);
+
     this.alive = false;
     this.reset();
   }
 
   reset() {
+    this.sound.currentTime = 0;
+    this.sound.play();
     this.alive = false;
     this.dir = Math.random() < 0.5 ? 1 : -1;
 
