@@ -8,6 +8,8 @@ import leaderboard_frameImage from "./assets/leaderboard_frame.png";
 import coinImage from "./assets/coin.png";
 import bombImage from "./assets/bomb.png";
 import coinSoundFile from "./assets/pickupCoin.wav";
+import explosionSoundFile from "./assets/explosion.wav";
+import bulletSoundFile from "./assets/laserShoot.wav";
 
 import Player from "./player";
 import Bullet from "./bullet";
@@ -107,6 +109,9 @@ export default async function runGame(clerk_instance) {
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
   const coinSound = new Audio(coinSoundFile);
+  const explosionSound = new Audio(explosionSoundFile);
+  explosionSound.volume = 0.6;
+  const bulletSound = new Audio(bulletSoundFile);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
@@ -417,6 +422,8 @@ export default async function runGame(clerk_instance) {
             skott_l_sprite
           )
         );
+        bulletSound.currentTime = 0;
+        bulletSound.play();
       }
       if (score % 12 == 0 && !coin.alive) {
         coin.alive = true;
@@ -450,6 +457,7 @@ export default async function runGame(clerk_instance) {
       coin.reset();
       score += 5;
       coinSound.currentTime = 0;
+
       coinSound.play();
     }
 
@@ -458,6 +466,9 @@ export default async function runGame(clerk_instance) {
       explosion.moveTo(bomb.x + bomb.size / 2, bomb.y + bomb.size / 2);
       explosion.burst(300);
       bomb.reset();
+
+      explosionSound.currentTime = 0;
+      explosionSound.play();
 
       bullets = bullets.filter(() => Math.random() < 0.5);
     }
