@@ -7,6 +7,7 @@ import kryssImage from "./assets/kryss.png";
 import leaderboard_frameImage from "./assets/leaderboard_frame.png";
 import coinImage from "./assets/coin.png";
 import bombImage from "./assets/bomb.png";
+import coinSoundFile from "./assets/pickupCoin.wav";
 
 import Player from "./player";
 import Bullet from "./bullet";
@@ -105,7 +106,7 @@ export default async function runGame(clerk_instance) {
 
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
-  const coinSound = new Audio("./assets/pickupCoin.wav");
+  const coinSound = new Audio(coinSoundFile);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
