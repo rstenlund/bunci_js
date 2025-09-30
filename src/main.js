@@ -1,11 +1,16 @@
 import { Clerk } from "@clerk/clerk-js";
 import "./style.css";
 import runGame from "./game.js";
+import { inject } from "@vercel/analytics";
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const clerk = new Clerk(clerkPubKey);
 await clerk.load();
+
+document.body.onload = () => {
+  inject();
+};
 
 if (clerk.isSignedIn) {
   document.getElementById("app").innerHTML = `
