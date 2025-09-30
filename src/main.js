@@ -13,6 +13,7 @@ document.body.onload = () => {
 };
 
 if (clerk.isSignedIn) {
+  inject();
   document.getElementById("app").innerHTML = `
     <div id="user-button"></div>
     <canvas id="gameCanvas" width="1000" height="700"></canvas>
@@ -23,6 +24,7 @@ if (clerk.isSignedIn) {
 
   clerk.mountUserButton(userButtonDiv);
 } else {
+  inject();
   document.getElementById("app").innerHTML = `
   <h1 style="width: 70%; margin-bottom: 20px; text-align: center; font-family: 'Courier New', monospace; font-size: 45px;">Welcome to bunci!</h1>
     <div id="sign-in"></div>
