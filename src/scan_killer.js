@@ -3,7 +3,7 @@ export default class ScanKiller {
     this.ctx = ctx;
     this.r = 150;
     this.alive = false;
-    this.rotation_speed = 4;
+    this.rotation_speed = 8;
     this.angle = 0;
     this.x = 0;
     this.y = 0;
