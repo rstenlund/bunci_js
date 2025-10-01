@@ -441,7 +441,7 @@ export default async function runGame(clerk_instance) {
         bomb.alive = true;
       }
 
-      if ((score + 20) % 40 == 0 && !nuke.alive) {
+      if ((score - 20) % 40 == 0 && !nuke.alive) {
         nuke.alive = true;
       }
     }
@@ -488,6 +488,12 @@ export default async function runGame(clerk_instance) {
       explosionSound.play();
 
       bullets = bullets.filter(() => Math.random() < 0.5);
+    }
+
+    if (nuke.alive && player.box.intersectsWith(nuke.box)) {
+      nuke.reset();
+      coinSound.currentTime = 0;
+      coinSound.play();
     }
 
     explosion.emit();
