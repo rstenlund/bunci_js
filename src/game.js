@@ -497,6 +497,7 @@ export default async function runGame(clerk_instance) {
       nuke.reset();
       coinSound.currentTime = 0;
       coinSound.play();
+      nuke_keeper.add();
     }
 
     explosion.emit();
