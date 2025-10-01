@@ -27,7 +27,6 @@ if (clerk.isSignedIn) {
   inject();
   document.getElementById("app").innerHTML = `
   <h1 id="welcome">Welcome to bunci!</h1>
-  <h3 id="playtext">Sign in to play</h3>
     <div id="sign-in"></div>
 
   `;

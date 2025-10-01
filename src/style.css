@@ -67,17 +67,8 @@ iframe {
 
 #welcome {
   width: 70%;
-  margin-bottom: 4px;
+  margin-bottom: 15px;
   text-align: center;
   font-size: 40px;
   color: white;
-}
-
-#playtext {
-  width: 70%;
-  text-align: center;
-  font-size: 25px;
-  color: white;
-  margin-top: 0;
-  margin-bottom: 10px;
 }
