@@ -455,18 +455,18 @@ export default async function runGame(clerk_instance) {
     ctx.fillText("Best: " + max_score, canvas.width / 2, 50);
 
     if (coin.alive) {
-      coin.draw();
       coin.update(dT);
+      coin.draw();
     }
 
     if (bomb.alive) {
-      bomb.draw();
       bomb.update(dT);
+      bomb.draw();
     }
 
     if (nuke.alive) {
-      nuke.draw();
       nuke.update(dT);
+      nuke.draw();
     }
 
     if (coin.alive && player.collidesWithPickup(coin)) {

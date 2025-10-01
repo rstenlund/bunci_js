@@ -23,10 +23,10 @@ export default class Player {
     this.box = new Box(
       this.x,
       this.y,
-      -this.size / 2,
-      -this.size / 2,
-      this.size,
-      this.size
+      -this.size / 3,
+      -this.size / 3,
+      (2 * this.size) / 3,
+      (2 * this.size) / 3
     );
 
     this.rot = 0;
