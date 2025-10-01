@@ -1,5 +1,5 @@
 import ParticleEmitter from "./particle_emitter";
-
+import Box from "./box";
 export default class Player {
   constructor(canvas, ctx, sprite) {
     //rendering
@@ -19,6 +19,15 @@ export default class Player {
     this.g = 1400.5; // gravity
     this.jumpStrength = -600;
     this.dashStrength = 350;
+
+    this.box = new Box(
+      this.x,
+      this.y,
+      -this.size / 2,
+      -this.size / 2,
+      this.size,
+      this.size
+    );
 
     this.rot = 0;
 
@@ -65,6 +74,8 @@ export default class Player {
         hitbox_size
       );
     }
+
+    this.box.debug();
   }
   update(dT) {
     if (this.fade < 1) return; // don't update until fully faded in
@@ -77,6 +88,8 @@ export default class Player {
     let x = Math.cos(this.rot - Math.PI / 2) * (this.size / 2);
     let y = Math.sin(this.rot - Math.PI / 2) * (this.size / 2);
     this.emitter.moveTo(this.x - x, this.y - y);
+
+    this.box.moveTo(this.x, this.y);
   }
 
   left() {

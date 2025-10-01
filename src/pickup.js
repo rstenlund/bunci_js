@@ -1,3 +1,5 @@
+import Box from "./box";
+
 export default class Pickup {
   constructor(ctx, canvas_width, canvas_height, img, speed = 300) {
     this.ctx = ctx;
@@ -10,6 +12,8 @@ export default class Pickup {
     this.y = 0;
     this.dir = 1;
     this.speed = speed;
+
+    this.box = new Box(this.x, this.y, 0, 0, this.width, this.height);
 
     this.img = img;
 
@@ -32,9 +36,12 @@ export default class Pickup {
     this.ctx.fillStyle = "red";
 
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
+    this.box.debug();
   }
   update(deltaTime) {
     this.x += this.speed * this.dir * deltaTime;
+
+    this.box.moveTo(this.x, this.y);
 
     if (this.x < -500 || this.x > this.canvas_width + 500) {
       this.reset();

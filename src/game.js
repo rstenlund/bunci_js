@@ -10,7 +10,9 @@ import bombImage from "./assets/bomb.png";
 import coinSoundFile from "./assets/pickupCoin.wav";
 import explosionSoundFile from "./assets/explosion.wav";
 import bulletSoundFile from "./assets/laserShoot.wav";
+import nukeImage from "./assets/nuke.png";
 
+import Inventory from "./inventory";
 import Player from "./player";
 import Bullet from "./bullet";
 import Pickup from "./pickup";
@@ -105,6 +107,7 @@ export default async function runGame(clerk_instance) {
   const kryss_sprite = await loadImage(kryssImage);
   const coin_sprite = await loadImage(coinImage);
   const bomb_sprite = await loadImage(bombImage);
+  const nuke_sprite = await loadImage(nukeImage);
 
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
@@ -131,6 +134,9 @@ export default async function runGame(clerk_instance) {
   let coin = new Pickup(ctx, canvas.width, canvas.height, coin_sprite, 200);
   let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
 
+  const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
+  const nuke_keeper = new Inventory(nuke, canvas, ctx);
+
   let imageSizeFactor = 1;
   let a = 0;
   let y_off = 0;
@@ -155,6 +161,9 @@ export default async function runGame(clerk_instance) {
           bullet.reset();
         }
         player.reset();
+        nuke.reset();
+        coin.reset();
+        bomb.reset();
       }
     }
     a += zoomSpeed * dT;
@@ -210,6 +219,7 @@ export default async function runGame(clerk_instance) {
         coin.reset();
         bomb.reset();
         player.reset();
+        nuke.reset();
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -430,6 +440,10 @@ export default async function runGame(clerk_instance) {
       if (score % 45 == 0 && !bomb.alive) {
         bomb.alive = true;
       }
+
+      if ((score + 20) % 40 == 0 && !nuke.alive) {
+        nuke.alive = true;
+      }
     }
 
     //display score
@@ -448,6 +462,11 @@ export default async function runGame(clerk_instance) {
     if (bomb.alive) {
       bomb.draw();
       bomb.update(dT);
+    }
+
+    if (nuke.alive) {
+      nuke.draw();
+      nuke.update(dT);
     }
 
     if (coin.alive && player.collidesWithPickup(coin)) {

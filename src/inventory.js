@@ -10,5 +10,6 @@ export default class Inventory {
     this.x = this.margin;
     this.y = this.canvas.height - this.size - this.margin;
     this.hitbox = new Box(this.x, this.y, 0, 0, this.size, this.size);
+    this.count = 0;
   }
 }
