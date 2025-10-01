@@ -11,6 +11,7 @@ import coinSoundFile from "./assets/pickupCoin.wav";
 import explosionSoundFile from "./assets/explosion.wav";
 import bulletSoundFile from "./assets/laserShoot.wav";
 import nukeImage from "./assets/nuke.png";
+import inventoryImage from "./assets/inventory_slot.png";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -109,6 +110,8 @@ export default async function runGame(clerk_instance) {
   const bomb_sprite = await loadImage(bombImage);
   const nuke_sprite = await loadImage(nukeImage);
 
+  const inventory_sprite = await loadImage(inventoryImage);
+
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
   const coinSound = new Audio(coinSoundFile);
@@ -135,7 +138,7 @@ export default async function runGame(clerk_instance) {
   let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
 
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
-  const nuke_keeper = new Inventory(nuke, canvas, ctx);
+  const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
 
   let imageSizeFactor = 1;
   let a = 0;
@@ -539,6 +542,8 @@ export default async function runGame(clerk_instance) {
 
     player.update(dT);
     player.draw();
+
+    nuke_keeper.draw();
 
     requestAnimationFrame(gameLoop);
   }
