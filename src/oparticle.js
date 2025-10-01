@@ -21,7 +21,7 @@ export default class Particle {
   }
 
   dead() {
-    return this.alpha < 0;
+    return this.alpha == 0;
   }
 
   draw() {
