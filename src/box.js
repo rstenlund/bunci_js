@@ -17,9 +17,9 @@ export default class Box {
     this.y = this.yorg + this.y_off;
   }
 
-  debug() {
-    this.ctx.strokeStyle = "red";
-    this.ctx.strokeRect(this.x, this.y, this.w, this.h);
+  debug(ctx) {
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(this.x, this.y, this.w, this.h);
   }
 
   intersectsWith(other_box) {

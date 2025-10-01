@@ -75,7 +75,7 @@ export default class Player {
       );
     }
 
-    this.box.debug();
+    this.box.debug(this.ctx);
   }
   update(dT) {
     if (this.fade < 1) return; // don't update until fully faded in

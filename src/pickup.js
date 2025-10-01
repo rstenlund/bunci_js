@@ -36,7 +36,7 @@ export default class Pickup {
     this.ctx.fillStyle = "red";
 
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
-    this.box.debug();
+    this.box.debug(this.ctx);
   }
   update(deltaTime) {
     this.x += this.speed * this.dir * deltaTime;
