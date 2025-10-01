@@ -12,6 +12,7 @@ export default class Inventory {
     this.y = this.canvas.height - this.size - this.margin;
     this.hitbox = new Box(this.x, this.y, 0, 0, this.size, this.size);
     this.count = 0;
+    this.itemSize = this.size / 2;
   }
 
   add() {
@@ -20,5 +21,21 @@ export default class Inventory {
 
   draw() {
     this.ctx.drawImage(this.sprite, this.x, this.y, this.size, this.size);
+    if (this.count > 0) {
+      this.ctx.drawImage(
+        this.pickup.img,
+        this.x + this.size / 2 - this.itemSize / 2,
+        this.y + this.size / 2 - this.itemSize / 2,
+        this.itemSize,
+        this.itemSize
+      );
+      this.ctx.fillStyle = "white";
+      this.ctx.font = "20px Arial";
+      this.ctx.fillText(
+        this.count,
+        this.x + this.size - 20,
+        this.y + this.size - 10
+      );
+    }
   }
 }
