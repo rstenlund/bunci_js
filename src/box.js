@@ -8,6 +8,7 @@ export default class Box {
     this.y = this.yorg + this.y_off;
     this.w = width;
     this.h = height;
+    this.debug_mode = false;
   }
 
   moveTo(x, y) {
@@ -18,6 +19,9 @@ export default class Box {
   }
 
   debug(ctx) {
+    if (!this.debug_mode) return;
+    //thinner stroke
+    ctx.lineWidth = 1;
     ctx.strokeStyle = "red";
     ctx.strokeRect(this.x, this.y, this.w, this.h);
   }

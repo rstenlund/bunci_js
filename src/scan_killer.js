@@ -7,7 +7,7 @@ export default class ScanKiller {
     this.angle = 0;
     this.x = 0;
     this.y = 0;
-    this.duration = 3000;
+    this.duration = 5000;
     this.start_time = 0;
     this.end_time = 0;
   }
