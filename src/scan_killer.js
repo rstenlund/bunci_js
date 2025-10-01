@@ -3,7 +3,7 @@ export default class ScanKiller {
     this.ctx = ctx;
     this.r = 150;
     this.alive = false;
-    this.rotation_speed = 2;
+    this.rotation_speed = 4;
     this.angle = 0;
     this.x = 0;
     this.y = 0;
@@ -24,7 +24,7 @@ export default class ScanKiller {
     this.angle = 0;
   }
 
-  update(dT) {
+  update(dT, bullets) {
     if (!this.alive) return;
     const now = Date.now();
     if (now > this.end_time) {
@@ -33,10 +33,29 @@ export default class ScanKiller {
     }
 
     this.angle += this.rotation_speed * dT;
-    this.ctx.strokeStyle = "green";
     this.ctx.lineWidth = 5;
+
     let outer_x = this.x + this.r * Math.cos(this.angle);
     let outer_y = this.y + this.r * Math.sin(this.angle);
+
+    // Check collisions with bullets
+    for (let bullet of bullets) {
+      for (let i = 0; i < this.r; i += 0.1) {
+        let scan_x = this.x + i * Math.cos(this.angle);
+        let scan_y = this.y + i * Math.sin(this.angle);
+        if (bullet.box.mouseOver(scan_x, scan_y)) {
+          bullet.remove = true;
+        }
+      }
+    }
+
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, 10, 0, 2 * Math.PI);
+    this.ctx.fillStyle = "green";
+    this.ctx.fill();
+
+    this.ctx.strokeStyle = "rgb(102, 255, 51)";
+
     this.ctx.beginPath();
     this.ctx.moveTo(this.x, this.y);
     this.ctx.lineTo(outer_x, outer_y);

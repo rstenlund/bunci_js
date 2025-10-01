@@ -24,6 +24,8 @@ export default class Bullet {
     this.box = new Box(this.x, this.y, 7, 14, this.width - 6, this.height - 2);
 
     this.alive = false;
+
+    this.remove = false;
     this.reset();
   }
 
