@@ -1,3 +1,5 @@
+import Box from "./box.js";
+
 import bulletSoundFile from "./assets/laserShoot.wav";
 
 export default class Bullet {
