@@ -19,6 +19,8 @@ export default class Bullet {
     this.sound = new Audio(bulletSoundFile);
     this.sound.volume = 0.2;
 
+    this.box = new Box(this.x, this.y, 5, 14, this.width - 10, this.height - 5);
+
     this.alive = false;
     this.reset();
   }
@@ -42,6 +44,7 @@ export default class Bullet {
     this.ctx.fillStyle = "red";
 
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
+    this.box.debug(this.ctx);
 
     // // Draw hitbox for debugging
     // this.ctx.save();
@@ -52,6 +55,7 @@ export default class Bullet {
   }
   update(deltaTime) {
     this.x += this.speed * this.dir * deltaTime;
+    this.box.moveTo(this.x, this.y);
 
     if (this.x < -500 || this.x > this.canvas_width + 500) {
       this.reset();

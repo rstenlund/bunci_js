@@ -15,6 +15,18 @@ export default class Inventory {
     this.itemSize = this.size / 2;
   }
 
+  reset() {
+    this.count = 0;
+  }
+
+  use() {
+    if (this.count > 0) {
+      this.count -= 1;
+      return true;
+    }
+    return false;
+  }
+
   add() {
     this.count += 1;
   }
@@ -24,8 +36,8 @@ export default class Inventory {
     if (this.count > 0) {
       this.ctx.drawImage(
         this.pickup.img,
-        this.x + this.size / 2 - this.itemSize / 2,
-        this.y + this.size / 2 - this.itemSize / 2,
+        this.x + this.size / 2 - this.itemSize / 2 + 2,
+        this.y + this.size / 2 - this.itemSize / 2 + 2,
         this.itemSize,
         this.itemSize
       );
@@ -33,8 +45,8 @@ export default class Inventory {
       this.ctx.font = "20px Arial";
       this.ctx.fillText(
         this.count,
-        this.x + this.size - 20,
-        this.y + this.size - 10
+        this.x + this.size - 15,
+        this.y + this.size - 16
       );
     }
   }

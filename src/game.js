@@ -167,6 +167,7 @@ export default async function runGame(clerk_instance) {
         nuke.reset();
         coin.reset();
         bomb.reset();
+        nuke_keeper.reset();
       }
     }
     a += zoomSpeed * dT;
@@ -223,6 +224,7 @@ export default async function runGame(clerk_instance) {
         bomb.reset();
         player.reset();
         nuke.reset();
+        nuke_keeper.reset();
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -316,6 +318,12 @@ export default async function runGame(clerk_instance) {
     );
   }
 
+  function nuke_now() {
+    if (nuke_keeper.use()) {
+      console.log("Nuke!");
+    }
+  }
+
   document.addEventListener("keypress", (e) => {
     if (e.code === "Space" && !running) {
       transition = true;
@@ -327,6 +335,9 @@ export default async function runGame(clerk_instance) {
     }
     if (e.key === "d" && running) {
       player.right();
+    }
+    if (e.key === "w" && running) {
+      nuke_now();
     }
   });
 
@@ -372,6 +383,10 @@ export default async function runGame(clerk_instance) {
     }
     if (e.button === 0 && running && canvasX >= canvas.width / 2) {
       player.right();
+    }
+
+    if (nuke_keeper.hitbox.mouseOver(canvasX, canvasY) && running) {
+      nuke_now();
     }
   });
 
