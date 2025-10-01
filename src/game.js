@@ -570,7 +570,6 @@ export default async function runGame(clerk_instance) {
 
     for (let killer of scan_killers) {
       killer.update(dT);
-      killer.draw();
     }
 
     player.update(dT);
