@@ -21,7 +21,7 @@ export default class Bullet {
     this.sound = new Audio(bulletSoundFile);
     this.sound.volume = 0.2;
 
-    this.box = new Box(this.x, this.y, 5, 14, this.width - 10, this.height - 5);
+    this.box = new Box(this.x, this.y, 7, 14, this.width - 6, this.height - 2);
 
     this.alive = false;
     this.reset();

@@ -17,6 +17,7 @@ import Inventory from "./inventory";
 import Player from "./player";
 import Bullet from "./bullet";
 import Pickup from "./pickup";
+import ScanKiller from "./scan_killer";
 
 import ParticleEmitter from "./particle_emitter";
 
@@ -139,6 +140,8 @@ export default async function runGame(clerk_instance) {
 
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
+
+  let scan_killers = [];
 
   let imageSizeFactor = 1;
   let a = 0;
@@ -321,6 +324,10 @@ export default async function runGame(clerk_instance) {
   function nuke_now() {
     if (nuke_keeper.use()) {
       console.log("Nuke!");
+      let killer = new ScanKiller(ctx);
+      killer.moveTo(player.x, player.y);
+      killer.start();
+      scan_killers.push(killer);
     }
   }
 
@@ -459,7 +466,12 @@ export default async function runGame(clerk_instance) {
         bomb.alive = true;
       }
 
-      if ((score - 20) % 40 == 0 && !nuke.alive) {
+      if (
+        score > 20 &&
+        (score + 20) % 40 == 0 &&
+        !nuke.alive &&
+        nuke_keeper.count < 9
+      ) {
         nuke.alive = true;
       }
     }
@@ -554,6 +566,11 @@ export default async function runGame(clerk_instance) {
           return;
         }
       }
+    }
+
+    for (let killer of scan_killers) {
+      killer.update(dT);
+      killer.draw();
     }
 
     player.update(dT);
