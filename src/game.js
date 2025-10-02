@@ -286,10 +286,10 @@ export default async function runGame(clerk_instance) {
       ctx.fillText(
         "New Highscore!",
         canvas.width / 2,
-        canvas.height / 2 - 50 - y_off
+        canvas.height / 2 - 25 - y_off
       );
       ctx.fillStyle = "white";
-      ctx.fillText(max_score, canvas.width / 2, canvas.height / 2 - y_off);
+      ctx.fillText(max_score, canvas.width / 2, canvas.height / 2 + 25 - y_off);
     }
   }
 
