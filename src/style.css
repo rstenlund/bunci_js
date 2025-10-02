@@ -45,20 +45,6 @@ body {
   text-align: center;
 }
 
-.navbar a:first-child {
-  border-left: none;
-}
-
-.navbar a:not(:first-child)::before {
-  content: "";
-  display: inline-block;
-  width: 3px;
-  height: 30px;
-  background: white;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-
 .navbar a:focus {
   outline: none;
 }
