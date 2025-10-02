@@ -16,6 +16,7 @@ import highscoreBackgroundImage from "./assets/highscorebackground.png";
 import darkImage from "./assets/dark.png";
 import highscoreSoundFile from "./assets/highscore.wav";
 import jumpSoundFile from "./assets/jump.wav";
+import deathSoundFile from "./assets/death.wav";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -130,6 +131,8 @@ export default async function runGame(clerk_instance) {
   const highscoreSound = new Audio(highscoreSoundFile);
 
   const jumpSound = new Audio(jumpSoundFile);
+
+  const deathSound = new Audio(deathSoundFile);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
@@ -608,6 +611,9 @@ export default async function runGame(clerk_instance) {
             clerk_instance.user.update({
               unsafeMetadata: { highscore: max_score },
             });
+          } else {
+            deathSound.currentTime = 0;
+            deathSound.play();
           }
           score = 0;
           deathScreen();
