@@ -1,7 +1,7 @@
 export default class ScanKiller {
   constructor(ctx) {
     this.ctx = ctx;
-    this.r = 200;
+    this.r = 150;
     this.alive = false;
     this.rotation_speed = 10;
     this.angle = 0;
@@ -40,7 +40,7 @@ export default class ScanKiller {
 
     // Check collisions with bullets
     for (let bullet of bullets) {
-      for (let i = 0; i < this.r; i += 0.1) {
+      for (let i = 0; i < this.r; i += 1) {
         let scan_x = this.x + i * Math.cos(this.angle);
         let scan_y = this.y + i * Math.sin(this.angle);
         if (bullet.box.mouseOver(scan_x, scan_y)) {
