@@ -17,6 +17,7 @@ import darkImage from "./assets/dark.png";
 import highscoreSoundFile from "./assets/highscore.wav";
 import jumpSoundFile from "./assets/jump.wav";
 import deathSoundFile from "./assets/death.wav";
+import placenukeSoundFile from "./assets/placenuke.wav";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -133,6 +134,8 @@ export default async function runGame(clerk_instance) {
   const jumpSound = new Audio(jumpSoundFile);
 
   const deathSound = new Audio(deathSoundFile);
+
+  const placenukeSound = new Audio(placenukeSoundFile);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
@@ -362,7 +365,9 @@ export default async function runGame(clerk_instance) {
 
   function nuke_now() {
     if (nuke_keeper.use()) {
-      console.log("Nuke!");
+      placenukeSound.currentTime = 0;
+      placenukeSound.play();
+      //console.log("Nuke!");
       let killer = new ScanKiller(ctx);
       killer.moveTo(player.x, player.y);
       killer.start();
