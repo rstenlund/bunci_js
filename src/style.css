@@ -30,7 +30,7 @@ body {
 }
 
 .navbar a {
-  height: 20px;
+  height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -53,8 +53,8 @@ body {
 .navbar a:not(:first-child)::before {
   content: "";
   display: inline-block;
-  width: 2px;
-  height: 20px;
+  width: 3px;
+  height: 30px;
   background: white;
   margin-right: 10px;
   vertical-align: middle;
