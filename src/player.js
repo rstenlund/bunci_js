@@ -21,7 +21,7 @@ export default class Player {
     this.dashStrength = 350;
 
     this.jumpsound = jumpsound;
-    this.jumpsound.volume = 0.5;
+    this.jumpsound.volume = 0.2;
 
     this.box = new Box(
       this.x,
