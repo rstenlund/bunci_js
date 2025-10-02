@@ -43,16 +43,28 @@ body {
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
-  border-right: 2px solid white;
   border-left: 2px solid white;
 }
 
-.navbar a img {
-  margin-right: 5px;
+.navbar a:first-child {
+  border-left: none;
+}
+
+.navbar a:not(:first-child)::before {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 20px;
+  background: white;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .navbar a:focus {
   outline: none;
+}
+.navbar a img {
+  margin-right: 5px;
 }
 
 #app {
