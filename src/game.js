@@ -14,6 +14,8 @@ import nukeImage from "./assets/nuke.png";
 import inventoryImage from "./assets/inventory_slot.png";
 import highscoreBackgroundImage from "./assets/highscorebackground.png";
 import darkImage from "./assets/dark.png";
+import highscoreSoundFile from "./assets/highscore.wav";
+import jumpSoundFile from "./assets/jump.wav";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -125,6 +127,10 @@ export default async function runGame(clerk_instance) {
   explosionSound.volume = 0.6;
   const bulletSound = new Audio(bulletSoundFile);
 
+  const highscoreSound = new Audio(highscoreSoundFile);
+
+  const jumpSound = new Audio(jumpSoundFile);
+
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
   const trophy_sprite = await loadImage(trophyImage);
@@ -153,7 +159,7 @@ export default async function runGame(clerk_instance) {
   let y_off = 0;
   let y_off_speed = 0;
 
-  const player = new Player(canvas, ctx, player_sprite);
+  const player = new Player(canvas, ctx, player_sprite, jumpSound);
 
   const zoomSpeed = 6;
   const transitionSpeed = 15;
@@ -584,6 +590,8 @@ export default async function runGame(clerk_instance) {
           transition = false;
           running = false;
           if (score > max_score) {
+            highscoreSound.currentTime = 0;
+            highscoreSound.play();
             new_highscore = true;
             max_score = score;
             const { data, error } = await supabase
