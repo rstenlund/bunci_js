@@ -270,7 +270,7 @@ export default async function runGame(clerk_instance) {
     if (new_highscore) {
       ctx.drawImage(dark_sprite, 0, 0, canvas.width, canvas.height);
 
-      let highscore_frame_width = 600;
+      let highscore_frame_width = 450;
       ctx.drawImage(
         highscore_background_sprite,
         canvas.width / 2 - highscore_frame_width / 2,
@@ -279,7 +279,7 @@ export default async function runGame(clerk_instance) {
         highscore_frame_width
       );
 
-      ctx.font = "bold 28px Courier, monospace";
+      ctx.font = "bold 36px Courier, monospace";
       ctx.fillStyle = "#FFD700";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
