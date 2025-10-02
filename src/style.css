@@ -43,6 +43,8 @@ body {
   margin-left: 10px;
   margin-right: 10px;
   text-align: center;
+  border-right: 2px solid white;
+  border-left: 2px solid white;
 }
 
 .navbar a img {
