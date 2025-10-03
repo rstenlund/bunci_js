@@ -153,7 +153,7 @@ export default async function runGame(clerk_instance) {
   ];
 
   let coin = new Pickup(ctx, canvas.width, canvas.height, coin_sprite, 200);
-  let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
+  let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 450);
 
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
