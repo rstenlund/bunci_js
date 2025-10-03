@@ -1,7 +1,7 @@
 import ParticleEmitter from "./particle_emitter";
 import Box from "./box";
 export default class Player {
-  constructor(canvas, ctx, sprite) {
+  constructor(canvas, ctx, sprite, jumpsound) {
     //rendering
     this.canvas = canvas;
     this.ctx = ctx;
@@ -19,6 +19,9 @@ export default class Player {
     this.g = 1400.5; // gravity
     this.jumpStrength = -600;
     this.dashStrength = 350;
+
+    this.jumpsound = jumpsound;
+    this.jumpsound.volume = 0.2;
 
     this.box = new Box(
       this.x,
@@ -96,11 +99,15 @@ export default class Player {
     this.velx = -this.dashStrength;
     this.vely = this.jumpStrength;
     this.emitter.burst(150);
+    this.jumpsound.currentTime = 0;
+    this.jumpsound.play();
   }
   right() {
     this.velx = this.dashStrength;
     this.vely = this.jumpStrength;
     this.emitter.burst(150);
+    this.jumpsound.currentTime = 0;
+    this.jumpsound.play();
   }
 
   outOfBounds() {

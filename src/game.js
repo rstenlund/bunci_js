@@ -12,6 +12,12 @@ import explosionSoundFile from "./assets/explosion.wav";
 import bulletSoundFile from "./assets/laserShoot.wav";
 import nukeImage from "./assets/nuke.png";
 import inventoryImage from "./assets/inventory_slot.png";
+import highscoreBackgroundImage from "./assets/highscorebackground.png";
+import darkImage from "./assets/dark.png";
+import highscoreSoundFile from "./assets/highscore.wav";
+import jumpSoundFile from "./assets/jump.wav";
+import deathSoundFile from "./assets/death.wav";
+import placenukeSoundFile from "./assets/placenuke.wav";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -98,6 +104,7 @@ export default async function runGame(clerk_instance) {
   let transition = false;
   let dead = false;
   let leaderboard_menu = false;
+  let new_highscore = false;
 
   const img = await loadImage(bunciImage);
 
@@ -110,6 +117,8 @@ export default async function runGame(clerk_instance) {
   const coin_sprite = await loadImage(coinImage);
   const bomb_sprite = await loadImage(bombImage);
   const nuke_sprite = await loadImage(nukeImage);
+  const highscore_background_sprite = await loadImage(highscoreBackgroundImage);
+  const dark_sprite = await loadImage(darkImage);
 
   const inventory_sprite = await loadImage(inventoryImage);
 
@@ -119,6 +128,14 @@ export default async function runGame(clerk_instance) {
   const explosionSound = new Audio(explosionSoundFile);
   explosionSound.volume = 0.6;
   const bulletSound = new Audio(bulletSoundFile);
+
+  const highscoreSound = new Audio(highscoreSoundFile);
+
+  const jumpSound = new Audio(jumpSoundFile);
+
+  const deathSound = new Audio(deathSoundFile);
+
+  const placenukeSound = new Audio(placenukeSoundFile);
 
   const leaderboard_frame_sprite = await loadImage(leaderboard_frameImage);
 
@@ -148,7 +165,7 @@ export default async function runGame(clerk_instance) {
   let y_off = 0;
   let y_off_speed = 0;
 
-  const player = new Player(canvas, ctx, player_sprite);
+  const player = new Player(canvas, ctx, player_sprite, jumpSound);
 
   const zoomSpeed = 6;
   const transitionSpeed = 15;
@@ -261,6 +278,31 @@ export default async function runGame(clerk_instance) {
       trophySize,
       trophySize
     );
+
+    if (new_highscore) {
+      ctx.drawImage(dark_sprite, 0, 0, canvas.width, canvas.height);
+
+      let highscore_frame_width = 450;
+      ctx.drawImage(
+        highscore_background_sprite,
+        canvas.width / 2 - highscore_frame_width / 2,
+        canvas.height / 2 - highscore_frame_width / 2 - y_off,
+        highscore_frame_width,
+        highscore_frame_width
+      );
+
+      ctx.font = "bold 36px Courier, monospace";
+      ctx.fillStyle = "#FFD700";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(
+        "New Highscore!",
+        canvas.width / 2,
+        canvas.height / 2 - 25 - y_off
+      );
+      ctx.fillStyle = "white";
+      ctx.fillText(max_score, canvas.width / 2, canvas.height / 2 + 25 - y_off);
+    }
   }
 
   function leaderboardScreen() {
@@ -323,7 +365,9 @@ export default async function runGame(clerk_instance) {
 
   function nuke_now() {
     if (nuke_keeper.use()) {
-      console.log("Nuke!");
+      placenukeSound.currentTime = 0;
+      placenukeSound.play();
+      //console.log("Nuke!");
       let killer = new ScanKiller(ctx);
       killer.moveTo(player.x, player.y);
       killer.start();
@@ -332,6 +376,11 @@ export default async function runGame(clerk_instance) {
   }
 
   document.addEventListener("keypress", (e) => {
+    if (e.code === "Space" && new_highscore) {
+      new_highscore = false;
+      return;
+    }
+
     if (e.code === "Space" && !running) {
       transition = true;
 
@@ -355,6 +404,11 @@ export default async function runGame(clerk_instance) {
     const canvasX = (e.clientX - rect.left) * scaleX;
     const canvasY = (e.clientY - rect.top) * scaleY;
     console.log("Canvas coordinates:", canvasX, canvasY);
+
+    if (new_highscore) {
+      new_highscore = false;
+      return;
+    }
 
     if (!running && !transition) {
       //console.log("go");
@@ -544,6 +598,9 @@ export default async function runGame(clerk_instance) {
           transition = false;
           running = false;
           if (score > max_score) {
+            highscoreSound.currentTime = 0;
+            highscoreSound.play();
+            new_highscore = true;
             max_score = score;
             const { data, error } = await supabase
               .from("leaderboard")
@@ -559,6 +616,9 @@ export default async function runGame(clerk_instance) {
             clerk_instance.user.update({
               unsafeMetadata: { highscore: max_score },
             });
+          } else {
+            deathSound.currentTime = 0;
+            deathSound.play();
           }
           score = 0;
           deathScreen();
