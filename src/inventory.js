@@ -1,14 +1,14 @@
 import Box from "./box";
 
 export default class Inventory {
-  constructor(pickup, canvas, ctx, sprite) {
+  constructor(pickup, canvas, ctx, sprite, slot_number = 0) {
     this.pickup = pickup;
     this.canvas = canvas;
     this.ctx = ctx;
     this.size = 60;
     this.margin = 20;
     this.sprite = sprite;
-    this.x = this.margin;
+    this.x = this.margin + this.size * slot_number + this.margin * slot_number;
     this.y = this.canvas.height - this.size - this.margin;
     this.hitbox = new Box(this.x, this.y, 0, 0, this.size, this.size);
     this.count = 0;

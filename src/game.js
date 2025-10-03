@@ -468,7 +468,7 @@ export default async function runGame(clerk_instance) {
 
       if (
         score > 20 &&
-        (score + 20) % 40 == 0 &&
+        (score + 20) % 60 == 0 &&
         !nuke.alive &&
         nuke_keeper.count < 9
       ) {
