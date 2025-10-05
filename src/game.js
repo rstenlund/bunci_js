@@ -685,13 +685,13 @@ export default async function runGame(clerk_instance) {
     }
     bullets = bullets.filter((bullet) => !bullet.remove);
 
+    diamond_display.setValue(diamonds);
+    diamond_display.draw();
+
     player.update(dT);
     player.draw();
 
     nuke_keeper.draw();
-
-    diamond_display.setValue(diamonds);
-    diamond_display.draw();
 
     requestAnimationFrame(gameLoop);
   }
