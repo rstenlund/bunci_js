@@ -42,11 +42,11 @@ export default class Inventory {
         this.itemSize
       );
       this.ctx.fillStyle = "white";
-      this.ctx.font = "20px Arial";
+      this.ctx.font = "18px Courier, monospace";
       this.ctx.fillText(
         this.count,
         this.x + this.size - 15,
-        this.y + this.size - 22
+        this.y + this.size - 19
       );
     }
   }
