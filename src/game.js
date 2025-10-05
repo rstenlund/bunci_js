@@ -755,7 +755,7 @@ export default async function runGame(clerk_instance) {
         bullet.draw();
         bullet.update(dT);
         if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
-          if (diamonds >= 3) {
+          if (diamonds >= 2) {
             accept_button.active = true;
             decline_button.active = true;
             revive_query = true;
