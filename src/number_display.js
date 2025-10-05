@@ -32,7 +32,7 @@ export default class NumberDisplay {
 
     this.ctx.fillText(
       this.value,
-      this.x + this.size + 5,
+      this.x + this.size + 10,
       this.y + this.size / 2
     );
   }
