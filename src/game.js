@@ -163,7 +163,7 @@ export default async function runGame(clerk_instance) {
   ];
 
   let coin = new Pickup(ctx, canvas.width, canvas.height, coin_sprite, 200);
-  let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
+  let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 450);
   let diamond = new Pickup(
     ctx,
     canvas.width,
@@ -541,8 +541,8 @@ export default async function runGame(clerk_instance) {
       }
 
       if (
-        score_timer > 20 &&
-        (score_timer + 20) % 30 == 0 &&
+        score > 20 &&
+        (score + 20) % 40 == 0 &&
         !nuke.alive &&
         nuke_keeper.count < 9
       ) {

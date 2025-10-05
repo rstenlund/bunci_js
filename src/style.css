@@ -29,6 +29,11 @@ body {
   margin-top: 20px;
 }
 
+p {
+  color: white;
+  font-size: 18px;
+}
+
 .navbar a {
   height: 30px;
   display: flex;
