@@ -641,7 +641,7 @@ export default async function runGame(clerk_instance) {
     if (running) {
       score_display.setValue(score);
     } else {
-      score_display.setValue(highscore);
+      score_display.setValue(max_score);
     }
     score_display.draw();
     diamond_display.setValue(diamonds);
