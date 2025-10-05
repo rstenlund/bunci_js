@@ -42,6 +42,8 @@ export default class Inventory {
         this.itemSize
       );
       this.ctx.fillStyle = "white";
+      this.ctx.textAlign = "left";
+      this.ctx.textBaseline = "top";
       this.ctx.font = "18px Courier, monospace";
       this.ctx.fillText(
         this.count,
