@@ -174,8 +174,7 @@ export default async function runGame(clerk_instance) {
     diamond_sprite,
     250
   );
-
-  const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
+  const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 450);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
 
   const diamond_display = new NumberDisplay(
@@ -226,6 +225,7 @@ export default async function runGame(clerk_instance) {
         coin.reset();
         bomb.reset();
         nuke_keeper.reset();
+        diamond.reset();
       }
     }
     a += zoomSpeed * dT;
@@ -283,6 +283,7 @@ export default async function runGame(clerk_instance) {
         player.reset();
         nuke.reset();
         nuke_keeper.reset();
+        diamond.reset();
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -633,6 +634,7 @@ export default async function runGame(clerk_instance) {
       canvas.height / 2,
       Math.max(canvas.width, canvas.height) / 1.2
     );
+
     gradient.addColorStop(0, "#cccccc"); // light grey center
     gradient.addColorStop(1, "#444444"); // dark grey edges
     ctx.fillStyle = gradient;
@@ -643,6 +645,7 @@ export default async function runGame(clerk_instance) {
     } else {
       score_display.setValue(max_score);
     }
+
     score_display.draw();
     diamond_display.setValue(diamonds);
     diamond_display.draw();
@@ -690,11 +693,11 @@ export default async function runGame(clerk_instance) {
         coin.alive = true;
       }
 
-      if (score_timer % 25 == 0 && !bomb.alive) {
+      if (score_timer % 30 == 0 && !bomb.alive) {
         bomb.alive = true;
       }
 
-      if ((score + 30) % 40 == 0 && !nuke.alive && nuke_keeper.count < 9) {
+      if ((score + 30) % 50 == 0 && !nuke.alive && nuke_keeper.count < 9) {
         nuke.alive = true;
       }
 
