@@ -604,7 +604,7 @@ export default async function runGame(clerk_instance) {
     ctx.fillText(
       "Revive for 10 diamonds?",
       canvas.width / 2,
-      canvas.height / 2 - 35
+      canvas.height / 2 - 45
     );
   }
 
@@ -703,13 +703,13 @@ export default async function runGame(clerk_instance) {
       }
     }
 
-    //display score
-    ctx.font = "bold 24px Courier, monospace";
-    ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "top";
-    ctx.fillText("Score: " + score, canvas.width / 2, 20);
-    ctx.fillText("Best: " + max_score, canvas.width / 2, 50);
+    // //display score
+    // ctx.font = "bold 24px Courier, monospace";
+    // ctx.fillStyle = "black";
+    // ctx.textAlign = "center";
+    // ctx.textBaseline = "top";
+    // ctx.fillText("Score: " + score, canvas.width / 2, 20);
+    // ctx.fillText("Best: " + max_score, canvas.width / 2, 50);
 
     if (coin.alive) {
       coin.update(dT);
