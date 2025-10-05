@@ -48,7 +48,7 @@ export default class Inventory {
       this.ctx.fillText(
         this.count,
         this.x + this.size - 15,
-        this.y + this.size - 20
+        this.y + this.size - 22
       );
     }
   }
