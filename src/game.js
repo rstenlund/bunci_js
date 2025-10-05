@@ -180,7 +180,7 @@ export default async function runGame(clerk_instance) {
   const diamond_display = new NumberDisplay(
     ctx,
     20,
-    70,
+    60,
     35,
     "white",
     diamond_sprite
