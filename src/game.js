@@ -490,7 +490,7 @@ export default async function runGame(clerk_instance) {
   const accept_button = new Button(
     ctx,
     canvas.width / 2 - 50,
-    canvas.height / 2,
+    canvas.height / 2 + 40,
     80,
     yes_sprite,
     () => {
@@ -521,7 +521,7 @@ export default async function runGame(clerk_instance) {
   const decline_button = new Button(
     ctx,
     canvas.width / 2 + 50,
-    canvas.height / 2,
+    canvas.height / 2 + 40,
     80,
     kryss_sprite,
     async () => {
@@ -592,7 +592,7 @@ export default async function runGame(clerk_instance) {
     ctx.fillText(
       "Revive for 10 diamonds?",
       canvas.width / 2,
-      canvas.height / 2 - 70
+      canvas.height / 2 - 20
     );
   }
 

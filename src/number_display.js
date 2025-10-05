@@ -27,12 +27,13 @@ export default class NumberDisplay {
   draw() {
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
     this.ctx.fillStyle = "white";
+    this.ctx.textAlign = "left";
     this.ctx.textBaseline = "middle";
     this.ctx.font = `bold ${this.size / 2}px Courier, monospace`;
 
     this.ctx.fillText(
       this.value,
-      this.x + this.size + 10,
+      this.x + this.size + 12,
       this.y + this.size / 2
     );
   }
