@@ -572,10 +572,21 @@ export default async function runGame(clerk_instance) {
   decline_button.active = false;
 
   function revive_shop() {
+    ctx.drawImage(dark_sprite, 0, 0, canvas.width, canvas.height);
+
+    let frame_width = 450;
+    ctx.drawImage(
+      highscore_background_sprite,
+      canvas.width / 2 - frame_width / 2,
+      canvas.height / 2 - frame_width / 2,
+      frame_width,
+      frame_width
+    );
+
     accept_button.draw();
     decline_button.draw();
-    ctx.font = "bold 32px Courier, monospace";
-    ctx.fillStyle = "black";
+    ctx.font = "bold 26px Courier, monospace";
+    ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(
@@ -758,7 +769,7 @@ export default async function runGame(clerk_instance) {
         bullet.update(dT);
         if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
           console.log(diamonds);
-          if (diamonds >= 2) {
+          if (diamonds >= 10) {
             accept_button.active = true;
             decline_button.active = true;
             revive_query = true;
