@@ -628,10 +628,10 @@ export default async function runGame(clerk_instance) {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    diamond_display.setValue(diamonds);
+    diamond_display.draw();
+
     if (revive_query) {
-      console.log("Revive query");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
       revive_shop();
       requestAnimationFrame(gameLoop);
       return;
@@ -822,9 +822,6 @@ export default async function runGame(clerk_instance) {
       killer.update(dT, bullets);
     }
     bullets = bullets.filter((bullet) => !bullet.remove);
-
-    diamond_display.setValue(diamonds);
-    diamond_display.draw();
 
     player.update(dT);
     player.draw();
