@@ -45,8 +45,8 @@ export default class Inventory {
       this.ctx.font = "18px Courier, monospace";
       this.ctx.fillText(
         this.count,
-        this.x + this.size - 15,
-        this.y + this.size - 19
+        this.x + this.size - 12,
+        this.y + this.size - 15
       );
     }
   }

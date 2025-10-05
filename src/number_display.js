@@ -28,7 +28,7 @@ export default class NumberDisplay {
     this.ctx.drawImage(this.img, this.x, this.y, this.size, this.size);
     this.ctx.fillStyle = "white";
     this.ctx.textBaseline = "middle";
-    this.ctx.font = `${this.size / 2}px Courier, monospace`;
+    this.ctx.font = `bold ${this.size / 2}px Courier, monospace`;
 
     this.ctx.fillText(
       this.value,

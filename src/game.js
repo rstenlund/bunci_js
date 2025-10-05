@@ -19,6 +19,7 @@ import jumpSoundFile from "./assets/jump.wav";
 import deathSoundFile from "./assets/death.wav";
 import placenukeSoundFile from "./assets/placenuke.wav";
 import diamondImage from "./assets/diamond.png";
+import yesImage from "./assets/yes.png";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -26,6 +27,7 @@ import Bullet from "./bullet";
 import Pickup from "./pickup";
 import ScanKiller from "./scan_killer";
 import NumberDisplay from "./number_display";
+import Button from "./button";
 
 import ParticleEmitter from "./particle_emitter";
 
@@ -130,7 +132,7 @@ export default async function runGame(clerk_instance) {
   const highscore_background_sprite = await loadImage(highscoreBackgroundImage);
   const dark_sprite = await loadImage(darkImage);
   const diamond_sprite = await loadImage(diamondImage);
-
+  const yes_sprite = await loadImage(yesImage);
   const inventory_sprite = await loadImage(inventoryImage);
 
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
@@ -431,6 +433,12 @@ export default async function runGame(clerk_instance) {
     const canvasY = (e.clientY - rect.top) * scaleY;
     console.log("Canvas coordinates:", canvasX, canvasY);
 
+    if (revive_query) {
+      accept_button.handleClick(canvasX, canvasY);
+      decline_button.handleClick(canvasX, canvasY);
+      return;
+    }
+
     if (new_highscore) {
       new_highscore = false;
       return;
@@ -477,6 +485,105 @@ export default async function runGame(clerk_instance) {
     }
   });
 
+  let revive_query = false;
+
+  const accept_button = new Button(
+    ctx,
+    canvas.width / 2 - 100,
+    canvas.height / 2,
+    80,
+    yes_sprite,
+    () => {
+      // revive player
+      player.reset();
+      bullets = [];
+      score_timer = 0;
+      revive_query = false;
+      accept_button.active = false;
+      decline_button.active = false;
+      diamonds -= 10;
+
+      supabase
+        .from("leaderboard")
+        .update({ diamonds })
+        .eq("user", clerk_instance.user.username)
+        .then(({ data, error }) => {
+          if (error) {
+            console.error("Error updating diamonds:", error);
+          }
+        });
+
+      coinSound.currentTime = 0;
+      coinSound.play();
+    }
+  );
+
+  const decline_button = new Button(
+    ctx,
+    canvas.width / 2 + 20,
+    canvas.height / 2,
+    80,
+    kryss_sprite,
+    async () => {
+      accept_button.active = false;
+      decline_button.active = false;
+
+      revive_query = false;
+      dead = true;
+      imageSizeFactor = 1;
+      a = 0;
+      y_off = 0;
+      y_off_speed = 0;
+      transition = false;
+      running = false;
+      if (score > max_score) {
+        highscoreSound.currentTime = 0;
+        highscoreSound.play();
+        new_highscore = true;
+        max_score = score;
+        const { data, error } = await supabase
+          .from("leaderboard")
+          .update({ score: max_score })
+          .eq("user", clerk_instance.user.username)
+          .select();
+
+        if (error) {
+          console.error("Error updating leaderboard:", error);
+        } else {
+          //console.log(data);
+        }
+        clerk_instance.user.update({
+          unsafeMetadata: { highscore: max_score },
+        });
+      } else {
+        deathSound.currentTime = 0;
+        deathSound.play();
+      }
+      score = 0;
+      score_timer = 0;
+      deathScreen();
+      requestAnimationFrame(gameLoop);
+      return;
+    }
+  );
+
+  accept_button.active = false;
+  decline_button.active = false;
+
+  function revive_shop() {
+    accept_button.draw();
+    decline_button.draw();
+    ctx.font = "bold 32px Courier, monospace";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(
+      "Revive for 10 diamonds?",
+      canvas.width / 2,
+      canvas.height / 2 - 50
+    );
+  }
+
   let del = 0;
 
   let dT = 0.005;
@@ -506,6 +613,12 @@ export default async function runGame(clerk_instance) {
     gradient.addColorStop(1, "#444444"); // dark grey edges
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (revive_query) {
+      revive_shop();
+      requestAnimationFrame(gameLoop);
+      return;
+    }
 
     if (leaderboard_menu) {
       leaderboardScreen();
@@ -640,6 +753,12 @@ export default async function runGame(clerk_instance) {
         bullet.draw();
         bullet.update(dT);
         if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
+          if (diamonds >= 1) {
+            accept_button.active = true;
+            decline_button.active = true;
+            revive_query = true;
+            return;
+          }
           //console.log("Player hit by bullet");
           dead = true;
           imageSizeFactor = 1;
