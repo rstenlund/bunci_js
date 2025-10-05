@@ -394,6 +394,7 @@ export default async function runGame(clerk_instance) {
   function nuke_now() {
     if (nuke_keeper.use()) {
       placenukeSound.currentTime = 0;
+      placenukeSound.volume = 0.3;
       placenukeSound.play();
       //console.log("Nuke!");
       let killer = new ScanKiller(ctx);
@@ -490,7 +491,7 @@ export default async function runGame(clerk_instance) {
   const accept_button = new Button(
     ctx,
     canvas.width / 2 - 50,
-    canvas.height / 2 + 40,
+    canvas.height / 2 + 30,
     80,
     yes_sprite,
     () => {
@@ -521,7 +522,7 @@ export default async function runGame(clerk_instance) {
   const decline_button = new Button(
     ctx,
     canvas.width / 2 + 50,
-    canvas.height / 2 + 40,
+    canvas.height / 2 + 30,
     80,
     kryss_sprite,
     async () => {
@@ -592,7 +593,7 @@ export default async function runGame(clerk_instance) {
     ctx.fillText(
       "Revive for 10 diamonds?",
       canvas.width / 2,
-      canvas.height / 2 - 20
+      canvas.height / 2 - 35
     );
   }
 
