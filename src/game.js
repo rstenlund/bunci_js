@@ -174,7 +174,15 @@ export default async function runGame(clerk_instance) {
 
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
-  const diamond_display = new NumberDisplay(ctx, 20, 20, 30, diamond_sprite);
+
+  const diamond_display = new NumberDisplay(
+    ctx,
+    20,
+    20,
+    30,
+    "white",
+    diamond_sprite
+  );
 
   let scan_killers = [];
 
