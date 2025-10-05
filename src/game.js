@@ -548,12 +548,7 @@ export default async function runGame(clerk_instance) {
         bomb.alive = true;
       }
 
-      if (
-        score > 20 &&
-        (score + 20) % 40 == 0 &&
-        !nuke.alive &&
-        nuke_keeper.count < 9
-      ) {
+      if ((score + 30) % 40 == 0 && !nuke.alive && nuke_keeper.count < 9) {
         nuke.alive = true;
       }
 
