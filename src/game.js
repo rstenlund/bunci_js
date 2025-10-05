@@ -18,12 +18,14 @@ import highscoreSoundFile from "./assets/highscore.wav";
 import jumpSoundFile from "./assets/jump.wav";
 import deathSoundFile from "./assets/death.wav";
 import placenukeSoundFile from "./assets/placenuke.wav";
+import diamondImage from "./assets/diamond.png";
 
 import Inventory from "./inventory";
 import Player from "./player";
 import Bullet from "./bullet";
 import Pickup from "./pickup";
 import ScanKiller from "./scan_killer";
+import NumberDisplay from "./number_display";
 
 import ParticleEmitter from "./particle_emitter";
 
@@ -71,6 +73,12 @@ export default async function runGame(clerk_instance) {
 
   const ctx = canvas.getContext("2d");
 
+  ctx.font = "bold 32px Courier, monospace";
+  ctx.fillStyle = "black";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("loading...", canvas.width / 2, canvas.height / 2);
+
   const { data, error } = await supabase.from("leaderboard").select("");
   if (error) {
     console.error("Error fetching leaderboard data:", error);
@@ -78,6 +86,7 @@ export default async function runGame(clerk_instance) {
   }
   let leaderboard_data = data;
   let max_score = 0;
+  let diamonds = 0;
 
   console.log(clerk_instance.user.username);
   for (let entry of data) {
@@ -85,6 +94,7 @@ export default async function runGame(clerk_instance) {
       console.log("User found in leaderboard:", entry.user);
       console.log("Score:", entry.score);
       max_score = entry.score;
+      diamonds = entry.diamonds;
     }
   }
   if (max_score === 0) {
@@ -119,6 +129,7 @@ export default async function runGame(clerk_instance) {
   const nuke_sprite = await loadImage(nukeImage);
   const highscore_background_sprite = await loadImage(highscoreBackgroundImage);
   const dark_sprite = await loadImage(darkImage);
+  const diamond_sprite = await loadImage(diamondImage);
 
   const inventory_sprite = await loadImage(inventoryImage);
 
@@ -127,7 +138,6 @@ export default async function runGame(clerk_instance) {
   const coinSound = new Audio(coinSoundFile);
   const explosionSound = new Audio(explosionSoundFile);
   explosionSound.volume = 0.6;
-  const bulletSound = new Audio(bulletSoundFile);
 
   const highscoreSound = new Audio(highscoreSoundFile);
 
@@ -154,9 +164,17 @@ export default async function runGame(clerk_instance) {
 
   let coin = new Pickup(ctx, canvas.width, canvas.height, coin_sprite, 200);
   let bomb = new Pickup(ctx, canvas.width, canvas.height, bomb_sprite, 500);
+  let diamond = new Pickup(
+    ctx,
+    canvas.width,
+    canvas.height,
+    diamond_sprite,
+    250
+  );
 
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 400);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
+  const diamond_display = new NumberDisplay(ctx, 20, 20, 30, diamond_sprite);
 
   let scan_killers = [];
 
@@ -455,6 +473,7 @@ export default async function runGame(clerk_instance) {
 
   let dT = 0.005;
   let score = 0;
+  let score_timer = 0;
 
   let lastTime = Date.now();
   let l = Date.now();
@@ -499,6 +518,7 @@ export default async function runGame(clerk_instance) {
 
     if (Date.now() - l >= 1000) {
       score++;
+      score_timer++;
       //console.log(score);
       l = Date.now();
       if (score % 8 == 0) {
@@ -512,21 +532,25 @@ export default async function runGame(clerk_instance) {
           )
         );
       }
-      if (score % 12 == 0 && !coin.alive) {
+      if (score_timer % 10 == 0 && !coin.alive) {
         coin.alive = true;
       }
 
-      if (score % 45 == 0 && !bomb.alive) {
+      if (score_timer % 25 == 0 && !bomb.alive) {
         bomb.alive = true;
       }
 
       if (
-        score > 20 &&
-        (score + 20) % 40 == 0 &&
+        score_timer > 20 &&
+        (score_timer + 20) % 30 == 0 &&
         !nuke.alive &&
         nuke_keeper.count < 9
       ) {
         nuke.alive = true;
+      }
+
+      if (score_timer % 60 == 0 && !diamond.alive) {
+        diamond.alive = true;
       }
     }
 
@@ -553,6 +577,11 @@ export default async function runGame(clerk_instance) {
       nuke.draw();
     }
 
+    if (diamond.alive) {
+      diamond.update(dT);
+      diamond.draw();
+    }
+
     if (coin.alive && player.collidesWithPickup(coin)) {
       //console.log("Player collected coin");
       coin.reset();
@@ -572,6 +601,24 @@ export default async function runGame(clerk_instance) {
       explosionSound.play();
 
       bullets = bullets.filter(() => Math.random() < 0.5);
+    }
+
+    if (diamond.alive && player.collidesWithPickup(diamond)) {
+      //console.log("Player collected diamond");
+      diamond.reset();
+
+      diamonds++;
+      const { error } = await supabase
+        .from("leaderboard")
+        .update({ diamonds })
+        .eq("user", clerk_instance.user.username);
+
+      if (error) {
+        console.error("Error updating diamonds:", error);
+      }
+
+      coinSound.currentTime = 0;
+      coinSound.play();
     }
 
     if (nuke.alive && player.box.intersectsWith(nuke.box)) {
@@ -621,6 +668,7 @@ export default async function runGame(clerk_instance) {
             deathSound.play();
           }
           score = 0;
+          score_timer = 0;
           deathScreen();
           requestAnimationFrame(gameLoop);
           return;
@@ -637,6 +685,9 @@ export default async function runGame(clerk_instance) {
     player.draw();
 
     nuke_keeper.draw();
+
+    diamond_display.setValue(diamonds);
+    diamond_display.draw();
 
     requestAnimationFrame(gameLoop);
   }
