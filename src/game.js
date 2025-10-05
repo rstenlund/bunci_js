@@ -762,6 +762,7 @@ export default async function runGame(clerk_instance) {
             accept_button.active = true;
             decline_button.active = true;
             revive_query = true;
+            requestAnimationFrame(gameLoop);
             return;
           }
           //console.log("Player hit by bullet");
