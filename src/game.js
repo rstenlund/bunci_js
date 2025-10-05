@@ -616,14 +616,15 @@ export default async function runGame(clerk_instance) {
       diamond.reset();
 
       diamonds++;
-      const { error } = await supabase
+      supabase
         .from("leaderboard")
         .update({ diamonds })
-        .eq("user", clerk_instance.user.username);
-
-      if (error) {
-        console.error("Error updating diamonds:", error);
-      }
+        .eq("user", clerk_instance.user.username)
+        .then(({ data, error }) => {
+          if (error) {
+            console.error("Error updating diamonds:", error);
+          }
+        });
 
       coinSound.currentTime = 0;
       coinSound.play();
