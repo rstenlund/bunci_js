@@ -139,13 +139,14 @@ export default async function runGame(clerk_instance) {
 
   const coinSound = new Audio(coinSoundFile);
   const explosionSound = new Audio(explosionSoundFile);
-  explosionSound.volume = 0.6;
+  explosionSound.volume = 0.3;
 
   const highscoreSound = new Audio(highscoreSoundFile);
 
   const jumpSound = new Audio(jumpSoundFile);
 
   const deathSound = new Audio(deathSoundFile);
+  deathSound.volume = 0.4;
 
   const placenukeSound = new Audio(placenukeSoundFile);
 
