@@ -181,10 +181,19 @@ export default async function runGame(clerk_instance) {
   const diamond_display = new NumberDisplay(
     ctx,
     20,
-    20,
+    70,
     35,
     "white",
     diamond_sprite
+  );
+
+  const score_display = new NumberDisplay(
+    ctx,
+    20,
+    20,
+    35,
+    "white",
+    coin_sprite
   );
 
   let scan_killers = [];
@@ -504,6 +513,7 @@ export default async function runGame(clerk_instance) {
       accept_button.active = false;
       decline_button.active = false;
       diamonds -= 10;
+      running = true;
 
       supabase
         .from("leaderboard")
@@ -628,6 +638,12 @@ export default async function runGame(clerk_instance) {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    if (running) {
+      score_display.setValue(score);
+    } else {
+      score_display.setValue(highscore);
+    }
+    score_display.draw();
     diamond_display.setValue(diamonds);
     diamond_display.draw();
 
@@ -775,6 +791,8 @@ export default async function runGame(clerk_instance) {
             accept_button.active = true;
             decline_button.active = true;
             revive_query = true;
+            running = false;
+
             requestAnimationFrame(gameLoop);
             return;
           }
