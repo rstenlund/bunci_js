@@ -179,7 +179,7 @@ export default async function runGame(clerk_instance) {
     ctx,
     20,
     20,
-    30,
+    28,
     "white",
     diamond_sprite
   );
