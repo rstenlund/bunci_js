@@ -525,6 +525,7 @@ export default async function runGame(clerk_instance) {
     80,
     kryss_sprite,
     async () => {
+      console.log("Player chose not to revive");
       accept_button.active = false;
       decline_button.active = false;
 
@@ -755,6 +756,7 @@ export default async function runGame(clerk_instance) {
         bullet.draw();
         bullet.update(dT);
         if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
+          console.log(diamonds);
           if (diamonds >= 2) {
             accept_button.active = true;
             decline_button.active = true;
