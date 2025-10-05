@@ -47,7 +47,7 @@ function loadImage(src) {
 }
 
 export default async function runGame(clerk_instance) {
-  console.log("Game started");
+  //console.log("Game started");
   const canvas = document.getElementById("gameCanvas");
 
   function isMobile() {
@@ -90,11 +90,11 @@ export default async function runGame(clerk_instance) {
   let max_score = 0;
   let diamonds = 0;
 
-  console.log(clerk_instance.user.username);
+  // console.log(clerk_instance.user.username);
   for (let entry of data) {
     if (entry.user == clerk_instance.user.username) {
-      console.log("User found in leaderboard:", entry.user);
-      console.log("Score:", entry.score);
+      // console.log("User found in leaderboard:", entry.user);
+      // console.log("Score:", entry.score);
       max_score = entry.score;
       diamonds = entry.diamonds;
     }
@@ -110,7 +110,7 @@ export default async function runGame(clerk_instance) {
     }
   }
 
-  console.log("Leaderboard data:", data);
+  // console.log("Leaderboard data:", data);
 
   let running = false;
   let transition = false;
