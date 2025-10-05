@@ -615,6 +615,8 @@ export default async function runGame(clerk_instance) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     if (revive_query) {
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       revive_shop();
       requestAnimationFrame(gameLoop);
       return;
