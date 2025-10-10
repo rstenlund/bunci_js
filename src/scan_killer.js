@@ -10,6 +10,7 @@ export default class ScanKiller {
     this.duration = 5000;
     this.start_time = 0;
     this.end_time = 0;
+    this.dir = Math.round(Math.random()) * 2 - 1;
   }
 
   moveTo(x, y) {
@@ -32,7 +33,7 @@ export default class ScanKiller {
       return;
     }
 
-    this.angle += this.rotation_speed * dT;
+    this.angle += this.rotation_speed * dT * this.dir;
     this.ctx.lineWidth = 5;
 
     let outer_x = this.x + this.r * Math.cos(this.angle);

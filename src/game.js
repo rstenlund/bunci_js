@@ -288,6 +288,7 @@ export default async function runGame(clerk_instance) {
         for (let bullet of bullets) {
           bullet.reset();
         }
+        scan_killers = [];
       }
     }
     a += zoomSpeed * dT;
