@@ -17,6 +17,7 @@ export default class Bar {
   }
 
   draw() {
+    if (this.val < 0) this.val = 0;
     this.ctx.fillStyle = this.bg;
     this.val_w = (this.val / this.max) * this.w;
     this.disp_val = this.#lerp(this.disp_val, this.val_w, 0.05);
