@@ -186,7 +186,7 @@ export default async function runGame(clerk_instance) {
     15,
     "red",
     "black",
-    100,
+    200,
     200
   );
 
