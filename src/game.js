@@ -28,6 +28,7 @@ import Pickup from "./pickup";
 import ScanKiller from "./scan_killer";
 import NumberDisplay from "./number_display";
 import Button from "./button";
+import Bar from "./bar";
 
 import ParticleEmitter from "./particle_emitter";
 
@@ -176,6 +177,18 @@ export default async function runGame(clerk_instance) {
   );
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 450);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
+
+  const fuel_bar = new Bar(
+    ctx,
+    canvas.width - 15,
+    y,
+    150,
+    15,
+    "red",
+    "black",
+    50,
+    100
+  );
 
   const diamond_display = new NumberDisplay(
     ctx,
@@ -839,6 +852,8 @@ export default async function runGame(clerk_instance) {
         }
       }
     }
+
+    fuel_bar.draw();
 
     for (let killer of scan_killers) {
       killer.update(dT, bullets);

@@ -1,0 +1,32 @@
+export default class Bar {
+  constructor(ctx, rx, y, w, h, color, bgcolor = "black", value, maxvalue) {
+    this.ctx = ctx;
+    this.x = rx - w;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.color = color;
+    this.bg = bgcolor;
+    this.val = value;
+    this.max = maxvalue;
+  }
+
+  draw() {
+    this.ctx.fillStyle = this.bg;
+    this.val_w = (this.val / this.max) * this.w;
+    this.ctx.fillRect(this.x, this.y, this.w, this.h);
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.x, this.y, this.val_w, this.h);
+  }
+
+  setVal(n) {
+    this.val = n;
+  }
+
+  sub(amnt = 1) {
+    this.value -= amnt;
+  }
+  add(amnt = 1) {
+    this.value += amnt;
+  }
+}
