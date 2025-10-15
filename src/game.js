@@ -453,10 +453,16 @@ export default async function runGame(clerk_instance) {
       //console.log("go");
     }
     if (e.key === "a" && running) {
+      if (fuel_bar.val <= 0) {
+        return;
+      }
       player.left();
       fuel_bar.jump();
     }
     if (e.key === "d" && running) {
+      if (fuel_bar.val <= 0) {
+        return;
+      }
       player.right();
       fuel_bar.jump();
     }
@@ -514,10 +520,16 @@ export default async function runGame(clerk_instance) {
       transition = true;
     }
     if (e.button === 0 && running && canvasX < canvas.width / 2) {
+      if (fuel_bar.val <= 0) {
+        return;
+      }
       player.left();
       fuel_bar.jump();
     }
     if (e.button === 0 && running && canvasX >= canvas.width / 2) {
+      if (fuel_bar.val <= 0) {
+        return;
+      }
       player.right();
       fuel_bar.jump();
     }
@@ -841,11 +853,7 @@ export default async function runGame(clerk_instance) {
       for (let bullet of bullets) {
         bullet.draw();
         bullet.update(dT);
-        if (
-          player.collidesWithBullet(bullet) ||
-          player.outOfBounds() ||
-          fuel_bar.val <= 0
-        ) {
+        if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
           console.log(diamonds);
           if (diamonds >= 10) {
             accept_button.active = true;
