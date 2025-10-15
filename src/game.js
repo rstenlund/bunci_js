@@ -186,8 +186,8 @@ export default async function runGame(clerk_instance) {
     15,
     "red",
     "black",
-    50,
-    100
+    100,
+    200
   );
 
   const diamond_display = new NumberDisplay(

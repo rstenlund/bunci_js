@@ -9,14 +9,20 @@ export default class Bar {
     this.bg = bgcolor;
     this.val = value;
     this.max = maxvalue;
+    this.disp_val = this.val;
+  }
+
+  #lerp(x, y, a) {
+    return x * (1 - a) + y * a;
   }
 
   draw() {
     this.ctx.fillStyle = this.bg;
     this.val_w = (this.val / this.max) * this.w;
+    this.disp_val = lerp(this.disp_val, this.val_w, 0.05);
     this.ctx.fillRect(this.x, this.y, this.w, this.h);
     this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(this.x, this.y, this.val_w, this.h);
+    this.ctx.fillRect(this.x, this.y, this.disp_val, this.h);
   }
 
   setVal(n) {
