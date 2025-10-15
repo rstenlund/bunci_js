@@ -647,6 +647,9 @@ export default async function runGame(clerk_instance) {
 
   let lastTime = Date.now();
   let l = Date.now();
+
+  let loopId = 0;
+
   async function gameLoop() {
     dT = (Date.now() - lastTime) / 1000;
     lastTime = Date.now();
@@ -682,23 +685,29 @@ export default async function runGame(clerk_instance) {
 
     if (revive_query) {
       revive_shop();
+      cancelAnimationFrame(loopId);
       requestAnimationFrame(gameLoop);
       return;
     }
 
     if (leaderboard_menu) {
       leaderboardScreen();
+      cancelAnimationFrame(loopId);
+
       requestAnimationFrame(gameLoop);
       return;
     }
 
     if (dead) {
       deathScreen();
+      cancelAnimationFrame(loopId);
       requestAnimationFrame(gameLoop);
       return;
     }
     if (!running) {
       splashScreen();
+      cancelAnimationFrame(loopId);
+
       requestAnimationFrame(gameLoop);
       return;
     }
@@ -840,6 +849,7 @@ export default async function runGame(clerk_instance) {
             revive_query = true;
             running = false;
 
+            cancelAnimationFrame(loopId);
             requestAnimationFrame(gameLoop);
             return;
           }
@@ -877,6 +887,8 @@ export default async function runGame(clerk_instance) {
           score = 0;
           score_timer = 0;
           deathScreen();
+          cancelAnimationFrame(loopId);
+
           requestAnimationFrame(gameLoop);
           return;
         }
@@ -895,7 +907,7 @@ export default async function runGame(clerk_instance) {
 
     nuke_keeper.draw();
 
-    requestAnimationFrame(gameLoop);
+    loopId = requestAnimationFrame(gameLoop);
   }
   gameLoop();
 }
