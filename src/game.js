@@ -20,6 +20,7 @@ import deathSoundFile from "./assets/death.wav";
 import placenukeSoundFile from "./assets/placenuke.wav";
 import diamondImage from "./assets/diamond.png";
 import yesImage from "./assets/yes.png";
+import gasImage from "./assets/gas.png";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -135,6 +136,7 @@ export default async function runGame(clerk_instance) {
   const diamond_sprite = await loadImage(diamondImage);
   const yes_sprite = await loadImage(yesImage);
   const inventory_sprite = await loadImage(inventoryImage);
+  const gas_sprite = await loadImage(gasImage);
 
   const explosion = new ParticleEmitter(0, 0, ctx, 1, 5, "red", 1.5, false);
 
@@ -177,6 +179,7 @@ export default async function runGame(clerk_instance) {
   );
   const nuke = new Pickup(ctx, canvas.width, canvas.height, nuke_sprite, 450);
   const nuke_keeper = new Inventory(nuke, canvas, ctx, inventory_sprite);
+  const gas = new Pickup(ctx, canvas.width, canvas.height, gas_sprite, 150);
 
   const fuel_bar = new Bar(
     ctx,
@@ -239,6 +242,10 @@ export default async function runGame(clerk_instance) {
         bomb.reset();
         nuke_keeper.reset();
         diamond.reset();
+        gas.reset();
+
+        score_timer = 0;
+        fuel_bar.setVal(200);
       }
     }
     a += zoomSpeed * dT;
@@ -297,6 +304,11 @@ export default async function runGame(clerk_instance) {
         nuke.reset();
         nuke_keeper.reset();
         diamond.reset();
+        gas.reset();
+        score_timer = 0;
+        fuel_bar.setVal(200);
+
+        // reset all bullets
 
         for (let bullet of bullets) {
           bullet.reset();
@@ -442,11 +454,11 @@ export default async function runGame(clerk_instance) {
     }
     if (e.key === "a" && running) {
       player.left();
-      fuel_bar.sub(5);
+      fuel_bar.jump();
     }
     if (e.key === "d" && running) {
       player.right();
-      fuel_bar.sub(5);
+      fuel_bar.jump();
     }
     if (e.key === "w" && running) {
       nuke_now();
@@ -503,11 +515,11 @@ export default async function runGame(clerk_instance) {
     }
     if (e.button === 0 && running && canvasX < canvas.width / 2) {
       player.left();
-      fuel_bar.sub(5);
+      fuel_bar.jump();
     }
     if (e.button === 0 && running && canvasX >= canvas.width / 2) {
       player.right();
-      fuel_bar.sub(5);
+      fuel_bar.jump();
     }
 
     if (nuke_keeper.hitbox.mouseOver(canvasX, canvasY) && running) {
@@ -711,6 +723,10 @@ export default async function runGame(clerk_instance) {
         coin.alive = true;
       }
 
+      if ((score_timer + 5) % 8 == 0 && !gas.alive) {
+        gas.alive = true;
+      }
+
       if (score_timer % 30 == 0 && !bomb.alive) {
         bomb.alive = true;
       }
@@ -750,6 +766,11 @@ export default async function runGame(clerk_instance) {
     if (diamond.alive) {
       diamond.update(dT);
       diamond.draw();
+    }
+
+    if (gas.alive) {
+      gas.update(dT);
+      gas.draw();
     }
 
     if (coin.alive && player.collidesWithPickup(coin)) {
@@ -797,6 +818,11 @@ export default async function runGame(clerk_instance) {
       coinSound.currentTime = 0;
       coinSound.play();
       nuke_keeper.add();
+    }
+
+    if (gas.alive && player.box.intersectsWith(gas.box)) {
+      gas.reset();
+      fuel_bar.add(100);
     }
 
     explosion.emit();
