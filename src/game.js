@@ -181,7 +181,7 @@ export default async function runGame(clerk_instance) {
   const fuel_bar = new Bar(
     ctx,
     canvas.width - 15,
-    y,
+    15,
     150,
     15,
     "red",

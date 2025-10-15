@@ -24,9 +24,9 @@ export default class Bar {
   }
 
   sub(amnt = 1) {
-    this.value -= amnt;
+    this.val -= amnt;
   }
   add(amnt = 1) {
-    this.value += amnt;
+    this.val += amnt;
   }
 }
