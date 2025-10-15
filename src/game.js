@@ -442,9 +442,11 @@ export default async function runGame(clerk_instance) {
     }
     if (e.key === "a" && running) {
       player.left();
+      fuel_bar.sub(5);
     }
     if (e.key === "d" && running) {
       player.right();
+      fuel_bar.sub(5);
     }
     if (e.key === "w" && running) {
       nuke_now();
@@ -501,9 +503,11 @@ export default async function runGame(clerk_instance) {
     }
     if (e.button === 0 && running && canvasX < canvas.width / 2) {
       player.left();
+      fuel_bar.sub(5);
     }
     if (e.button === 0 && running && canvasX >= canvas.width / 2) {
       player.right();
+      fuel_bar.sub(5);
     }
 
     if (nuke_keeper.hitbox.mouseOver(canvasX, canvasY) && running) {
