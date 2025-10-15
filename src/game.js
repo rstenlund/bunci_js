@@ -841,7 +841,11 @@ export default async function runGame(clerk_instance) {
       for (let bullet of bullets) {
         bullet.draw();
         bullet.update(dT);
-        if (player.collidesWithBullet(bullet) || player.outOfBounds()) {
+        if (
+          player.collidesWithBullet(bullet) ||
+          player.outOfBounds() ||
+          fuel_bar.val <= 0
+        ) {
           console.log(diamonds);
           if (diamonds >= 10) {
             accept_button.active = true;
@@ -909,5 +913,5 @@ export default async function runGame(clerk_instance) {
 
     loopId = requestAnimationFrame(gameLoop);
   }
-  gameLoop();
+  loopId = requestAnimationFrame(gameLoop);
 }
