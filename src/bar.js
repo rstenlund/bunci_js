@@ -9,7 +9,7 @@ export default class Bar {
     this.bg = bgcolor;
     this.val = value;
     this.max = maxvalue;
-    this.disp_val = this.val;
+    this.disp_val = (this.val / this.max) * this.w;
   }
 
   #lerp(x, y, a) {
