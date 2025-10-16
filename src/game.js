@@ -21,6 +21,7 @@ import placenukeSoundFile from "./assets/placenuke.wav";
 import diamondImage from "./assets/diamond.png";
 import yesImage from "./assets/yes.png";
 import gasImage from "./assets/gas.png";
+import bunciSongSoundFile from "./assets/buncisong.wav";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -157,6 +158,11 @@ export default async function runGame(clerk_instance) {
 
   const trophy_sprite = await loadImage(trophyImage);
   const trophySize = 60;
+
+  const bunciSong = new Audio(bunciSongSoundFile);
+  bunciSong.loop = true;
+  bunciSong.volume = 0.25;
+  bunciSong.play();
 
   let bullets = [
     new Bullet(
