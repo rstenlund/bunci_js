@@ -162,7 +162,6 @@ export default async function runGame(clerk_instance) {
   const bunciSong = new Audio(bunciSongSoundFile);
   bunciSong.loop = true;
   bunciSong.volume = 0.25;
-  bunciSong.play();
 
   let bullets = [
     new Bullet(
@@ -728,6 +727,10 @@ export default async function runGame(clerk_instance) {
 
       requestAnimationFrame(gameLoop);
       return;
+    }
+
+    if (bunciSong.paused) {
+      bunciSong.play();
     }
 
     if (Date.now() - l >= 1000) {
