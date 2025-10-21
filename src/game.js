@@ -457,21 +457,21 @@ export default async function runGame(clerk_instance) {
 
       //console.log("go");
     }
-    if (e.key === "a" && running) {
+    if ((e.key === "a" || e.key === "ArrowLeft") && running) {
       if (fuel_bar.val <= 0) {
         return;
       }
       player.left();
       fuel_bar.jump();
     }
-    if (e.key === "d" && running) {
+    if ((e.key === "d" || e.key === "ArrowRight") && running) {
       if (fuel_bar.val <= 0) {
         return;
       }
       player.right();
       fuel_bar.jump();
     }
-    if (e.key === "w" && running) {
+    if ((e.key === "w" || e.key === "ArrowUp") && running) {
       nuke_now();
     }
   });
