@@ -447,6 +447,7 @@ export default async function runGame(clerk_instance) {
   }
 
   document.addEventListener("keypress", (e) => {
+    console.log(e.code);
     if (e.code === "Space" && new_highscore) {
       new_highscore = false;
       return;
