@@ -14,7 +14,7 @@ document.body.onload = () => {
 
 if (clerk.isSignedIn) {
   inject();
-  document.getElementsByClassName("homepage").hidden = true;
+  document.getElementsByClassName("homepage").style.display = "none";
 
   document.getElementById("app").innerHTML = `
     <div id="user-button"></div>
@@ -29,7 +29,7 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   inject();
-  document.getElementsByClassName("homepage").hidden = false;
+  document.getElementsByClassName("homepage").style.display = "block";
   document.getElementById("app").innerHTML = "";
 
   const signInDiv = document.getElementById("sign-in");
