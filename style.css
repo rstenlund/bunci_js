@@ -27,3 +27,9 @@ canvas:hover {
   justify-content: center;
   align-items: center;
 }
+
+.navbarcontainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
