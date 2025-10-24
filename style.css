@@ -19,3 +19,11 @@ canvas:hover {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
+
+.homepage {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
