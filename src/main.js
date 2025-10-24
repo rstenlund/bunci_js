@@ -12,13 +12,9 @@ document.body.onload = () => {
   inject();
 };
 
-function sib() {
-  document.getElementById("sign-in").hidden = false;
-}
-
 if (clerk.isSignedIn) {
   inject();
-  document.getElementById("homepage").hidden = true;
+  document.getElementsByClassName("homepage").hidden = true;
 
   document.getElementById("app").innerHTML = `
     <div id="user-button"></div>
@@ -33,7 +29,7 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   inject();
-  document.getElementById("homepage").hidden = false;
+  document.getElementsByClassName("homepage").hidden = false;
   document.getElementById("app").innerHTML = "";
 
   const signInDiv = document.getElementById("sign-in");

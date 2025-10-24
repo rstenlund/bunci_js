@@ -17,10 +17,12 @@
     <div class="page">
       <div class="homepage">
         <h1 id="welcome">Welcome to bunci!</h1>
-        <button onclick="document.getElementById('sign-in').hidden = false;">
+        <button
+          onclick="document.getElementById('sign-in').style.display = 'block';"
+        >
           Sign in
         </button>
-        <div id="sign-in" hidden></div>
+        <div id="sign-in" style="display: none"></div>
       </div>
       <div id="app"></div>
       <div class="navbar">
