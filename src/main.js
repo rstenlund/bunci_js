@@ -29,7 +29,7 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   inject();
-  document.querySelector(".homepage").style.display = "fixed";
+  document.querySelector(".homepage").style.display = "flex";
 
   document.querySelector(".homepage").hidden = false;
   document.getElementById("app").innerHTML = "";
