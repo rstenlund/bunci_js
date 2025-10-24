@@ -33,3 +33,8 @@ canvas:hover {
   bottom: 0;
   width: 100%;
 }
+
+.sitecontainer {
+  display: flex;
+  flex-direction: column;
+}
