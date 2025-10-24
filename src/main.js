@@ -12,12 +12,19 @@ document.body.onload = () => {
   inject();
 };
 
+function sib() {
+  document.getElementById("sign-in").hidden = false;
+}
+
 if (clerk.isSignedIn) {
   inject();
+  document.getElementById("homepage").hidden = true;
+
   document.getElementById("app").innerHTML = `
     <div id="user-button"></div>
     <p>a and d for movement, w to use pickup</p>
     <canvas id="gameCanvas" width="1000" height="700"></canvas>
+    
   `;
   runGame(clerk);
 
@@ -26,11 +33,8 @@ if (clerk.isSignedIn) {
   clerk.mountUserButton(userButtonDiv);
 } else {
   inject();
-  document.getElementById("app").innerHTML = `
-  <h1 id="welcome">Welcome to bunci!</h1>
-    <div id="sign-in"></div>
-
-  `;
+  document.getElementById("homepage").hidden = false;
+  document.getElementById("app").innerHTML = "";
 
   const signInDiv = document.getElementById("sign-in");
 
