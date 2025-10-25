@@ -274,7 +274,7 @@ export default async function runGame(clerk_instance) {
 
     ctx.font = "bold 32px Courier, monospace";
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(
@@ -342,7 +342,7 @@ export default async function runGame(clerk_instance) {
 
     ctx.font = "bold 32px Courier, monospace";
 
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(
@@ -699,7 +699,8 @@ export default async function runGame(clerk_instance) {
 
     gradient.addColorStop(0, "#cccccc"); // light grey center
     gradient.addColorStop(1, "#444444"); // dark grey edges
-    ctx.fillStyle = "black";
+    // set background color to space black
+    ctx.fillStyle = "rgb(10, 10, 30)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // draw stars
