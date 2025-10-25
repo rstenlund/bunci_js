@@ -22,6 +22,7 @@ import diamondImage from "./assets/diamond.png";
 import yesImage from "./assets/yes.png";
 import gasImage from "./assets/gas.png";
 import bunciSongSoundFile from "./assets/buncisong.wav";
+import controlsImage from "./assets/controls.png";
 
 import Inventory from "./inventory";
 import Player from "./player";
@@ -119,7 +120,7 @@ export default async function runGame(clerk_instance) {
     stars.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 1,
+      size: Math.random() * 1.5 + 0.5,
       alpha: Math.random() * 0.5 + 0.5,
     });
   }
