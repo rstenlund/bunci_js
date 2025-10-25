@@ -41,6 +41,11 @@ p {
 }
 
 canvas {
+  border: none;
+  border-radius: 0px;
+}
+
+#gameCanvas {
   border-radius: 15px;
   user-select: none;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
@@ -49,18 +54,24 @@ canvas {
   border: 3px solid black;
 }
 
-canvas:hover {
+#gameCanvas:hover {
   border: 3px solid white;
 }
 
 #welcome {
   width: 70%;
 
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   text-align: center;
   font-size: 50px;
   font-weight: 600;
   color: black;
+}
+
+#tagline {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  font-weight: 300;
 }
 
 #sign-in {
@@ -109,19 +120,6 @@ canvas:hover {
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
-}
-
-@media (max-width: 600px) {
-  .navbar {
-    flex-wrap: wrap;
-    justify-content: center; /* center wrapped items */
-  }
-
-  .navbar a {
-    margin: 6px 2px; /* smaller gaps */
-    font-size: 16px; /* smaller text */
-    padding: 6px 8px; /* reduce clickable area slightly */
-  }
 }
 
 .navbar a:focus {
@@ -195,4 +193,21 @@ canvas:hover {
 .howto p {
   margin: 10px 20px;
   text-align: center;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center; /* center wrapped items */
+  }
+
+  .navbar a {
+    margin: 6px 2px; /* smaller gaps */
+    font-size: 16px; /* smaller text */
+    padding: 6px 8px; /* reduce clickable area slightly */
+  }
+
+  .howto div {
+    margin-bottom: 8px;
+  }
 }
