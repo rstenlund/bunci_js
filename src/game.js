@@ -113,6 +113,16 @@ export default async function runGame(clerk_instance) {
     }
   }
 
+  let stars = [];
+  const star_count = 100;
+  for (let i = 0; i < star_count; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1,
+    });
+  }
+
   // console.log("Leaderboard data:", data);
 
   let running = false;
@@ -689,8 +699,16 @@ export default async function runGame(clerk_instance) {
 
     gradient.addColorStop(0, "#cccccc"); // light grey center
     gradient.addColorStop(1, "#444444"); // dark grey edges
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // draw stars
+    for (let star of stars) {
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
 
     if (running) {
       score_display.setValue(score);
