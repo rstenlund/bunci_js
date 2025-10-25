@@ -63,15 +63,24 @@ canvas {
 
   margin-bottom: 5px;
   text-align: center;
-  font-size: 50px;
-  font-weight: 600;
+  font-size: 70px;
+  font-weight: 400;
   color: black;
+}
+
+.bunci-logo {
+  width: 600px;
+  user-select: none;
 }
 
 #tagline {
   margin-top: 0px;
   margin-bottom: 30px;
-  font-weight: 300;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 #sign-in {
@@ -136,14 +145,14 @@ canvas {
 }
 
 .signin-button {
-  width: 300px;
-  height: 80px;
+  width: 400px;
+  height: 90px;
   border-radius: 15px;
   border: none;
   background: linear-gradient(145deg, #cacaca, #f0f0f0);
   box-shadow: 8px 8px 16px #868686, -8px -8px 16px #ffffff;
-  font-size: 24px;
-
+  font-size: 28px;
+  color: black;
   transition: box-shadow 0.3s ease;
 }
 
@@ -207,7 +216,21 @@ canvas {
     padding: 6px 8px; /* reduce clickable area slightly */
   }
 
+  .howto {
+    margin-top: 15px;
+  }
+
   .howto div {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+  }
+
+  .bunci-logo {
+    width: 100%;
+  }
+
+  .signin-button {
+    width: 90%;
+    height: 70px;
+    font-size: 22px;
   }
 }
