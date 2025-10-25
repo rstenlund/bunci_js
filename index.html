@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bunci</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./src/style.css" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon2.ico" />
 
@@ -15,19 +15,11 @@
   </head>
   <body>
     <div class="sitecontainer">
-      <div class="page">
-        <div class="homepage">
-          <h1 id="welcome">Bunci</h1>
-          <button onclick="document.getElementById('sign-in').hidden = false;">
-            Sign in
-          </button>
-          <div id="sign-in" hidden></div>
-        </div>
-        <div id="app"></div>
-      </div>
-
       <div class="navbarcontainer">
         <div class="navbar">
+          <a href="/"
+            ><img src="./src/assets/bunci.png" height="40" alt="Bunci Logo"
+          /></a>
           <a href="/about">about</a>
           <a href="mailto:info@bunci.net">mail</a>
           <a href="https://github.com/rstenlund/bunci_js" target="_blank">
@@ -40,6 +32,20 @@
             github
           </a>
         </div>
+      </div>
+
+      <div class="page">
+        <div class="homepage">
+          <h1 id="welcome">Bunci</h1>
+          <button
+            class="signin-button"
+            onclick="document.getElementById('sign-in').hidden = false;"
+          >
+            Sign in to play ➡️
+          </button>
+          <div id="sign-in" hidden></div>
+        </div>
+        <div id="app"></div>
       </div>
     </div>
     <script type="module" src="src/bar.js"></script>

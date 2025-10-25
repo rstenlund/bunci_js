@@ -8,7 +8,8 @@ body {
   padding: 0;
   margin: 0;
   height: 100vh;
-  background: linear-gradient(to bottom, #1c1c1c, #080808);
+
+  background: linear-gradient(to bottom, #eaeaea, #afafaf);
 }
 
 .page {
@@ -20,41 +21,9 @@ body {
   justify-content: center;
 }
 
-.navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 20px;
-}
-
 p {
   color: white;
   font-size: 18px;
-}
-
-.navbar a {
-  height: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  margin-top: 15;
-  margin-bottom: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
-  text-align: center;
-}
-
-.navbar a:focus {
-  outline: none;
-}
-.navbar a img {
-  margin-right: 5px;
 }
 
 #app {
@@ -74,18 +43,99 @@ p {
 canvas {
   border-radius: 15px;
   user-select: none;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  transition: border 0.3s ease;
+  border: 3px solid black;
 }
 
-iframe {
-  max-width: 90vw;
-  border: none;
-  border-radius: 5px;
+canvas:hover {
+  border: 3px solid white;
 }
 
 #welcome {
   width: 70%;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   text-align: center;
-  font-size: 40px;
-  color: white;
+  font-size: 50px;
+  font-weight: 600;
+  color: black;
+}
+
+#sign-in {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.homepage {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbarcontainer {
+  width: 100%;
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+  box-shadow: 32px 32px 64px #b8b8b8, -32px -32px 64px #ffffff;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar a {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.navbar a:focus {
+  outline: none;
+}
+.navbar a img {
+  margin-right: 5px;
+}
+
+.sitecontainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.signin-button {
+  width: 300px;
+  height: 80px;
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow: 8px 8px 16px #868686, -8px -8px 16px #ffffff;
+  font-size: 24px;
+
+  transition: box-shadow 0.3s ease;
+}
+
+.signin-button:hover {
+  box-shadow: 16px 16px 32px #868686, -16px -16px 32px #ffffff;
+
+  cursor: pointer;
 }
