@@ -18,7 +18,6 @@ if (clerk.isSignedIn) {
 
   document.getElementById("app").innerHTML = `
     <div id="user-button"></div>
-    <p>a and d for movement, w to use pickup</p>
     <canvas id="gameCanvas" width="1000" height="700"></canvas>
     
   `;
