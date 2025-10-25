@@ -120,6 +120,7 @@ export default async function runGame(clerk_instance) {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       size: Math.random() * 2 + 1,
+      alpha: Math.random() * 0.5 + 0.5,
     });
   }
 
@@ -700,15 +701,24 @@ export default async function runGame(clerk_instance) {
     gradient.addColorStop(0, "#cccccc"); // light grey center
     gradient.addColorStop(1, "#444444"); // dark grey edges
     // set background color to space black
-    ctx.fillStyle = "rgb(10, 10, 30)";
+    ctx.fillStyle = "rgb(10, 10, 20)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // draw stars
     for (let star of stars) {
       ctx.fillStyle = "white";
+      //random blinking
+      star.alpha += (Math.random() - 0.5) / 10;
+
+      //clamp alpha between 0.3 and 1
+      if (star.alpha < 0.3) star.alpha = 0.3;
+      if (star.alpha > 1) star.alpha = 1;
+
+      ctx.globalAlpha = star.alpha;
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
       ctx.fill();
+      ctx.globalAlpha = 1.0;
     }
 
     if (running) {
